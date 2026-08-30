@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Ficha de Ensayos · BASF Nunhems</title>
+<style>
+:root{
+  --dark:#1F4E3D;
+  --mid:#2E7D5B;
+  --accent:#EE7203;
+  --accent-dark:#C25800;
+  --bg:#F5F7F5;
+  --card:#FFFFFF;
+  --ink:#16241E;
+  --muted:#657A70;
+  --line:#E1E8E3;
+  --yellow:#FFF6D6;
+  --danger:#C0392B;
+  --radius:14px;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);}
+body{
+  padding-bottom:78px;
+  min-height:100vh;
+  overscroll-behavior-y:none;
+}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}
+h1,h2,h3{margin:0;}
+.eyebrow{
+  text-transform:uppercase;letter-spacing:.09em;font-size:11px;font-weight:700;color:var(--mid);
+}
+/* ---------- Top App Bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:30;
+  background:linear-gradient(135deg,var(--dark),var(--mid));
+  color:#fff;padding:14px 16px calc(14px + env(safe-area-inset-top)/3);
+  padding-top:calc(14px + env(safe-area-inset-top));
+}
+.topbar .row{display:flex;align-items:center;gap:10px;}
+.brand{
+  font-weight:800;font-size:15px;letter-spacing:.02em;
+  display:flex;align-items:center;gap:8px;
+}
+.brand .sq{width:9px;height:9px;background:#fff;display:inline-block;}
+.brand small{font-weight:500;opacity:.85;font-size:11px;}
+.topbar h1{font-size:19px;font-weight:800;margin-top:6px;letter-spacing:-.01em;}
+.topbar .sub{font-size:12.5px;opacity:.88;margin-top:2px;}
+.iconbtn{
+  background:rgba(255,255,255,.16);border:none;color:#fff;width:36px;height:36px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;flex-shrink:0;
+}
+.iconbtn:active{background:rgba(255,255,255,.3);}
+.back-row{display:flex;align-items:center;gap:8px;margin-bottom:2px;}
+.back-row .backbtn{background:none;border:none;color:#fff;opacity:.9;font-size:13px;font-weight:600;
+  display:flex;align-items:center;gap:4px;padding:4px 0;cursor:pointer;}
+.tag{
+  display:inline-flex;align-items:center;gap:6px;
+  border:1px dashed rgba(255,255,255,.55);border-radius:8px;padding:3px 9px;
+  font-size:11.5px;font-weight:700;letter-spacing:.03em;margin-top:8px;
+}
+
+/* ---------- Layout ---------- */
+.view{padding:16px;max-width:640px;margin:0 auto;animation:fade .18s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:16px;margin-bottom:14px;
+}
+.section-title{
+  font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--dark);
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;
+}
+.section-title .num{
+  width:20px;height:20px;border-radius:50%;background:var(--dark);color:#fff;font-size:10.5px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+
+/* ---------- Fields ---------- */
+.field{margin-bottom:14px;}
+.field:last-child{margin-bottom:0;}
+.field label{
+  display:block;font-size:12.5px;font-weight:700;color:var(--ink);margin-bottom:6px;
+}
+.field .hint{font-size:11px;color:var(--muted);font-weight:400;margin-left:6px;}
+.field input[type=text],
+.field input[type=number],
+.field input[type=date],
+.field input[type=email],
+.field input[type=tel],
+.field select,
+.field textarea{
+  width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;
+  font-size:15px;background:#fff;color:var(--ink);font-family:inherit;
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--mid);box-shadow:0 0 0 3px rgba(46,125,91,.12);
+}
+.field textarea{resize:vertical;min-height:64px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.savepill{
+  display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--mid);font-weight:700;
+  opacity:0;transition:opacity .25s ease;margin-top:8px;
+}
+.savepill.show{opacity:1;}
+
+/* ---------- Buttons ---------- */
+.btn{
+  border:none;border-radius:11px;padding:12px 18px;font-size:14.5px;font-weight:700;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;font-family:inherit;
+}
+.btn-primary{background:var(--dark);color:#fff;width:100%;}
+.btn-primary:active{background:#153a2c;}
+.btn-accent{background:var(--accent);color:#fff;}
+.btn-accent:active{background:var(--accent-dark);}
+.btn-ghost{background:#fff;color:var(--dark);border:1.5px solid var(--line);}
+.btn-danger{background:#fff;color:var(--danger);border:1.5px solid #f0d4d0;}
+.btn-block{width:100%;}
+.btn-sm{padding:8px 12px;font-size:13px;border-radius:9px;}
+.fab{
+  position:fixed;right:18px;bottom:92px;z-index:25;
+  width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;border:none;
+  font-size:26px;box-shadow:0 6px 18px rgba(238,114,3,.4);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;
+}
+.fab:active{background:var(--accent-dark);}
+
+/* ---------- Bottom nav ---------- */
+.bottomnav{
+  position:fixed;left:0;right:0;bottom:0;z-index:30;
+  background:#fff;border-top:1px solid var(--line);
+  display:flex;padding:6px 4px calc(6px + env(safe-area-inset-bottom));
+}
+.navbtn{
+  flex:1;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:6px 2px;color:var(--muted);font-size:10.5px;font-weight:700;cursor:pointer;font-family:inherit;
+}
+.navbtn .ic{font-size:19px;line-height:1;}
+.navbtn.active{color:var(--dark);}
+.navbtn.active .ic{transform:translateY(-1px);}
+
+/* ---------- Home / trial list ---------- */
+.empty{
+  text-align:center;padding:56px 20px;color:var(--muted);
+}
+.empty .ic{font-size:40px;margin-bottom:10px;}
+.trial-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:12px;cursor:pointer;
+}
+.trial-card:active{background:#F0F4F1;}
+.trial-ref{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;font-weight:700;
+  color:var(--mid);border:1px dashed var(--mid);border-radius:6px;padding:2px 6px;display:inline-block;
+}
+.trial-card .body{flex:1;min-width:0;}
+.trial-card h3{font-size:15px;font-weight:800;margin:4px 0 2px;}
+.trial-card .meta{font-size:12px;color:var(--muted);}
+.trial-card .chev{color:var(--muted);font-size:18px;}
+
+/* ---------- KPI grid ---------- */
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.kpi{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;
+}
+.kpi .lbl{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);}
+.kpi .val{font-size:22px;font-weight:800;color:var(--dark);margin-top:4px;font-family:ui-monospace,monospace;}
+
+/* ---------- Rows list (protocolo/seguimiento) ---------- */
+.entry{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:10px;
+}
+.entry-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px;}
+.entry-head h4{font-size:14.5px;font-weight:800;}
+.entry-head .date{font-size:11.5px;color:var(--muted);font-family:ui-monospace,monospace;}
+.entry-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;font-size:13px;margin-bottom:6px;}
+.entry-grid .k{color:var(--muted);}
+.entry-grid .v{font-weight:700;}
+.badge-bbch{
+  display:inline-block;background:var(--yellow);color:#7A5A00;font-weight:800;font-size:12px;
+  border-radius:7px;padding:2px 8px;font-family:ui-monospace,monospace;
+}
+.entry .comment{font-size:13px;color:var(--ink);margin-top:6px;line-height:1.4;}
+.entry .foot{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);}
+.author{font-size:11px;color:var(--muted);}
+
+/* ---------- Photos ---------- */
+.photo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.photo-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+}
+.photo-card img{width:100%;height:130px;object-fit:cover;display:block;background:#eee;}
+.photo-card .pmeta{padding:9px 10px;}
+.photo-card .pmeta .bbch{font-size:11px;}
+.photo-card .pmeta .cm{font-size:12px;color:var(--ink);margin-top:3px;line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+
+/* ---------- Modal ---------- */
+.modal-backdrop{
+  position:fixed;inset:0;background:rgba(15,25,20,.5);z-index:50;display:flex;align-items:flex-end;
+}
+.modal{
+  background:#fff;border-radius:18px 18px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));
+  width:100%;max-height:88vh;overflow-y:auto;animation:up .2s ease;
+}
+@keyframes up{from{transform:translateY(24px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.modal-head h3{font-size:16px;font-weight:800;}
+.modal-head button{background:var(--bg);border:none;width:30px;height:30px;border-radius:50%;font-size:15px;color:var(--muted);cursor:pointer;}
+.photo-preview{width:100%;border-radius:12px;margin-bottom:12px;max-height:260px;object-fit:cover;background:#eee;}
+.upload-box{
+  border:2px dashed var(--line);border-radius:12px;padding:22px 14px;text-align:center;color:var(--muted);
+  font-size:13px;margin-bottom:12px;cursor:pointer;
+}
+.upload-box .ic{font-size:26px;display:block;margin-bottom:6px;}
+
+/* ---------- Tabs (inside trial) ---------- */
+.subtabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;margin-top:12px;-webkit-overflow-scrolling:touch;}
+.subtabs::-webkit-scrollbar{display:none;}
+.subtab{
+  flex-shrink:0;background:rgba(255,255,255,.14);color:#fff;border:none;border-radius:20px;
+  padding:7px 13px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit;opacity:.8;
+}
+.subtab.active{background:#fff;color:var(--dark);opacity:1;}
+
+.list-datalist-note{font-size:10.5px;color:var(--muted);margin-top:5px;}
+.divider{height:1px;background:var(--line);margin:14px 0;}
+.chart-wrap{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;margin-bottom:14px;}
+.chart-wrap h4{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--dark);margin-bottom:10px;}
+canvas{max-width:100%;}
+.name-gate{
+  position:fixed;inset:0;background:linear-gradient(160deg,var(--dark),var(--mid));z-index:100;
+  display:flex;align-items:center;justify-content:center;padding:24px;
+}
+.name-gate .box{background:#fff;border-radius:18px;padding:26px 22px;max-width:360px;width:100%;}
+.name-gate h2{font-size:19px;font-weight:800;margin-bottom:6px;color:var(--dark);}
+.name-gate p{font-size:13.5px;color:var(--muted);margin-bottom:16px;line-height:1.4;}
+.toast{
+  position:fixed;top:calc(14px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);
+  background:var(--dark);color:#fff;padding:10px 18px;border-radius:30px;font-size:13px;font-weight:600;
+  z-index:200;box-shadow:0 6px 20px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:.25s;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(4px);}
+.swipe-del{color:var(--danger);background:#fff;border:1.5px solid #f0d4d0;}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+
+<div id="pinGate" class="name-gate" style="display:none;">
+  <div class="box">
+    <h2>&#128274; Acceso protegido</h2>
+    <p id="pinGateText">Introduce el PIN de acceso de tu equipo para entrar a los ensayos.</p>
+    <div class="field"><label>PIN de acceso</label><input id="pinInput" type="tel" inputmode="numeric" placeholder="••••" maxlength="12" style="letter-spacing:.2em;font-weight:800;" onkeydown="if(event.key==='Enter')document.getElementById('pinBtn').click()"></div>
+    <div id="pinError" style="color:#C0392B;font-size:12.5px;font-weight:700;margin:-8px 0 12px;display:none;">PIN incorrecto. Inténtalo de nuevo.</div>
+    <button class="btn btn-primary btn-block" onclick="submitPin()" id="pinBtn">Entrar</button>
+  </div>
+</div>
+
+<div id="nameGate" class="name-gate" style="display:none;">
+  <div class="box">
+    <h2>&#127793; Bienvenido/a</h2>
+    <p>Indica tu nombre para identificar tus registros. Varias personas pueden usar esta ficha a la vez: todos veréis los mismos ensayos, evaluaciones y fotos, actualizados al momento.</p>
+    <div class="field"><label>Tu nombre</label><input id="nameInput" type="text" placeholder="Ej. Marta Gómez"></div>
+    <button class="btn btn-primary btn-block" onclick="saveName()">Entrar</button>
+  </div>
+</div>
+
+<div id="app"></div>
+<div id="toast" class="toast"></div>
+
+<script>
+const LISTS = {"PRODUCTO": ["Algedi", "Alverde", "Basagran SG", "Bellis", "Cabrio Duo", "Cabrio Team", "Cantus", "Caramba", "Collis", "Comanche", "Comet", "Corum", "Fastac Fly", "Feromonas", "Full BASF", "Goldor Bait", "Initium", "Lovit-Comet Pack", "Plataforma", "Pulsar 40", "Regalis New", "Regent TS", "Retengo Plus", "Signum", "Stomp Aqua", "Surround", "Vivando", "Wing Pack", "Xemium", "Otros"], "CULTIVO": ["Alcachofa", "Alfalfa", "Algodón", "Arroz", "Cebolla/Ajo", "Cereales", "Cítricos", "Cucurbitáceas", "Fresa", "Frutales Pepita", "Girasol", "Lechuga", "Leguminosas", "Maíz", "Melocotón/Nectarina", "Non-Crop", "Olivo", "Ornamentales", "Otros Cultivos", "Otros Frutales", "Otros Frutales Hueso", "Otros Hortícolas", "Patata", "Pimiento", "Remolacha Azucarera", "Tabaco", "Tomate", "Uva de Mesa", "Viña", "Varios"], "DISTRIBUIDORES": ["ABONOS GUTIERREZ, S.A.", "ABONOS JIMENEZ, S.L.", "ABONOS VELEZ, S.L.", "ABONOS Y FUNGICIDAS RICARDO S.L.", "ABONOS Y SEMILLAS SA", "ACTEL, S.C.C.L.", "ADOLFO MARTINEZ, S.A.", "AGRARIA DE SAN ANTON 84  S. COOP. L", "AGRICENTER", "AGRICOLA MARTIN, S.L.", "AGRICOLA VILLARROBLEDO, S.A.", "AGRICULTURA Y ENSAYO S.L.", "AGRO BENAVENTE, S.L.", "AGRO GENIL, S.L.", "AGRO MODOL, S.A.", "AGRO REGIONAL, S.L.", "AGRO SYSTEM, S.A.", "AGROANZUR, S.A.", "AGROAREVALO, S.L.", "AGROAZUAGA, S.L.", "AGROBARCENILLA, S.L.", "AGROCELTA, S.L.", "AGROFIT, SDAD.COOP.", "AGROFRONTIL, S.L.", "AGROGUADALIMAR, S.L.", "AGROITALICA, S.L.", "AGROMAESTRAT SL", "AGROMIX-8 S.L.", "AGROMIX-8, S.L.", "AGROMORGADO, S.A.", "AGRONUL, S.L.", "AGROPECUARIA PALENTINA S.C.L.", "AGROPULPI, S.L.", "AGROQUIMICA ALCARREÑA C.B.", "AGROQUIMICOS BORREGO, S.L.", "AGROQUIMICOS BOSCH, S.L.", "AGROQUIMICOS DEL DUERO, S.L.", "AGROQUIMICOS DEL EBRO SL", "AGROQUIMICOS FERNANDO CARRASCO", "AGROQUIMICOS FERNANDO CARRASCO, S.L", "AGROQUIMICOS FUENTES, S.L.", "AGROQUIMICOS GALLARDO S.L.", "AGROQUIMICOS HERIBERTO S.L.", "AGROQUIMICOS HERMANOS LOPEZ S.L.", "AGROQUIMICOS LOS CAZADORES SL", "AGROQUIMICOS LOS CAZADORES, S.L.", "AGROQUIMICOS SANTOS, S.L.", "AGROQUIMICOS TOLEDO, S.L.", "AGROQUIMICOS Y SERVICIOS S.L.", "Agroquímicos Zarco, S.L.", "AGROQUIMICS INSULARS, S.L.", "AGROSERVEIS.CAT, S.L.", "AGROSERVICAMP, S.L.", "AGROSET S.L.", "AGROSUM", "AGROTAW MURCIA", "AGROTECNICAS SAUCANA, S.L.", "AGROTORRIJOS, S.L.", "AGROVEYCA, S.L.", "ALBACETE AGRICOLA, S.L.", "ALMANZORA PECUARIA, S.L.", "ALTO EBRO, S.COOP.", "ALVAREZ ARAGONES, PEDRO MANUEL", "ALVARO PALLARES, S.L.", "AMANDO MARTINEZ, S.L.", "AN S.COOP.", "ANTONIO LUNA AGUILAR, S.L.", "ASISTENCIA FITOSANITARIA,S.L.", "ASPAVID, S.L.", "AVICULTURA Y GANADERIA, S.L.", "BASFESA SEVILLA", "BENICARLO AGRICENTER, S.L.", "BERNALDEZ VILLAR, JOSE MARIA", "BERNUY AVENTURAS S. COOP. CLM", "BOSCO ABASCAL, S.L.", "BUREBA EBRO SCL", "C. T. BRAVO E HIJOS SA", "CABAÑAS MORENO, MERCEDES", "CABASAN CONSULTORES S.L.", "CABRERA MORALES, FRANCISCO", "CAMARA ORTEGA, JOSE", "CAMPO NAVARRO, JESUS", "CANAVES COMERCIAL, S.A.", "CARLOS LOPEZ, S.L.", "Caro Zabala Fitosanitarios, S.L.", "CEREALES ASTIGI, S.A.T. 8839", "CIAL.AGRICOLA AFYSA S.L.", "CIAL.AGRICOLA IÑAKI CASTRO S.L.", "CIAL.AGRICOLA IÑAKI CASTRO, S.L.", "CIAL.AGRICOLA SANJUAN Y CANET, S.L.", "CIAL.DE SERVICIOS AGRIGAN, S.A.", "CIAL.TECNICA AGRICOLA,S.L.", "COARVAL COOP. V.", "COMERCIAL AGRARIA CALERA S.A.", "COMERCIAL GUADIANA, S.A.", "COMI AGRICOLA, S.L.", "COMPAÑIA DE MANIPULADO Y ENVASADO", "COMUNIDAD AUTONOMA DE LA REGION", "COOP.AGRICOLA CATOLICA DE", "COOPERATIVA GARU, S. COOP.", "Cooperativa Ventas de Armentia", "COUSAS DO CAMPO, S.L.U.", "CRESPILLO INSECTICIDAS, S.L.", "CUESTA CUESTA SL", "DEL CASTILLO GONZALEZ ELIPE,", "DESARROLLO Y APLICACIONES", "DIPUTACION PROVIN. DE HUELVA", "DISCAMPO, S.L.", "DISTRIB.AGRICOLAS HERRERO S.L.", "DISTRIBUCIONES OSPAMA S.L.", "DISTRIBUIDORA DE AGROSUMINISTROS", "DISTRIBUIDORA DE PROD. AGRICOL. Y", "DISTRIBUIDORA DE PROD. AGRICOL. Y FITOSANITARIOS DEL MAESTRAZGO, S.L.", "DROGUERIA JUNYENT HERBIFUNG, S.L.", "EBRECULTIUS S.L.", "ENRIQUE VILLAVIEJA, S.A.", "ESTEBAN INIESTA, POLICARPO", "ESTEVENATUR, S.L.", "EURAGRO SL", "EURAGRO, S.L.", "EUROCAMPO VERDE, S.L.", "EUROSEMILLAS S.A.", "FERNANDERO, C.B.", "FERSAIZ, S.L.", "FERTAGRO SERVICIOS AGRICOLAS S.L", "FERTICAMPO, S.A.", "FERTILIZANTES Y AGROQ.ROMAN S.L.", "FERTILIZANTES Y CEREALES BALDOMINOS", "FERTILIZANTES Y FITOSANITARIOS", "FERTILIZANTES Y SEMILLAS S.L.", "FIAÑO DISTRIBUCIONES S.L.", "FIDIAL  S.L.", "FITAGRO, S.A.", "FITOCASH INMOBILIARIA, S.L.", "FITOEGA SL", "FITOGAR, S.L.", "FITOGARDEN, S.L.", "FITOLORCA S.L.", "FITOMOLINA, S.L.", "FITONOVO, S.L.", "FITORIOJA S.L.", "FITOSANITARIOS MANUEL GOMEZ", "FITOSANITARIOS PABLOS S.L.", "FITOXENT, SCLV", "FRANCISCO DOMINGO, S.L.", "FRANCISCO MORENO CHECA Y", "Fruta Sans", "FRUTALBA S.L.", "FULGENCIO SPA, S.L.", "GALVEZ SEMILLAS, S.L.", "GARCIA ESPADA DISTRIBUCIONES", "GARLAN, S.COOP.", "GOMEZ CORTON, JOSE M.", "GUTIERREZ MORENO-FDEZ.,AGUSTIN", "HERMANOS IZQUIERDO CANO S.L.", "HERVEJI, S.L.", "HISEAGRO ECIJA, S.L.", "HOJIBLANCA S.C.A.", "HOJIBLANCA SOC. COOP. AND.", "ILERCAMP, S.A.", "INABAL PROTECCION DE CULTIVOS, S.L.", "INDS. AGRARIAS CASTELLANAS, S.A.", "INSERBO, S.L.", "Instalaciones AN", "JESUS GARCIA, SERAFINA", "JOAN MIQUEL MONJO, S.L.", "JOSE LUIS OCAÑA, S.L.", "JOSE ORTIZ LAVADO, S.L.", "LAS MARISMAS DE LEBRIJA,S.C.A.", "LEGUMBRES Y CEREALES, S.A.", "LIMAGRAIN IBERICA, S.A.", "MAJ AGROQUIMICOS, S.L.", "MARINO AGUILERA, S.L.", "MARTIEZ DE LA PERA, S.A.", "MARTINEZ CARRA, S.L.", "MARTINEZ GOMEZ, MIGUEL E.", "MEDENAGRO, S.L.", "MEDITERRANEO SAVIA AGRICOLA, S.A.", "MIGUEL ANGEL RIVERA, S.L.", "MIGUEL CRESPILLO SANIDAD", "MILUMA, S.A.", "MOLINA CASTRO, GERARDO", "MULTIAGRO S.L.", "NAVARRO MONTES AGRO, S.L.", "NEBOT CARREGUI SL", "NEVIAN FERTILIZANTES, S.L.", "NIETO CANO, ANTONIO", "OLCO-GALICIA, S.A.", "OLMEDO CASTILLO, CIRILO", "PAEZ CARRASCO, MARTIN", "PARRA AGROCENTRO TOMELLOSO S.L.", "PATOLOGIA Y NUTRICION VEGETAL,S.L.", "PERAGRO, S.L.", "PEREZ PARRA, JUAN FCO.", "PIONEER HI-BRED SPAIN, S.L.", "PLANTOVAL FITOSANITARIOS, S.L.", "PLANTOVAL, S.L.", "PRESMAR, S.L.", "PRO.SE.ME. SEMILLAS, S.L.", "PROAGRISE, S.L.", "PRODS.GANADEROS ALBACETE, S.L.", "PRODUCTOS GILCA S.C.", "PROTECCION TECNICA NATURA S.L.", "PROTECCION VERDE SL", "QABTUR AGROQUIMICOS S.L.", "RAFAEL BARJOLA, S.L.", "RANON PENABAD, DOMINGO ANTONIO", "RIAFIME, S.L.", "RODRIGUEZ SANCHEZ, JUAN MANUEL", "RUBIO LOPEZ, LUIS MARIA", "RUIZ PIZARRO, S.A.", "S.A. SEHICOR", "S.COOP.GARU", "SALINAS Y GARCIA, S.A.", "SANCHEZ ORO MENDOZA", "SANCHEZ Y SORIANO C.B.", "SANROY, S.L.", "SDAD COOP LTDA COMARCAL AGRARIA", "Semillas y Fitosanitarios FitoTres,", "SERMUCO SDAD. COOP DE 2. GRADO", "SERVICIOS AGRARIOS PEREZ SL", "SILLERO FERNANDEZ, FRANCISCO", "SIRAMSA", "SOCIEDAD AGRICOLA GALLEGA SOAGA", "SOCIEDAD COOP. AGRARIA ORVALAIZ", "SOCIEDAD COOPERATIVA AGRO-BUREBA", "SOLANO ORTIZ NICOLASA", "Suca - Sdad. Coop And - Huelva", "SUCA - SDAD.COOP.ANDALUZA", "SUMAGUILAS, S.L.", "SUMINISTROS AGRICOLAS HERNANDEZ", "SUR AGRO, S.L.", "TAQUIM, S.A.", "TECNICA AGRARIA ALBO, S.L.", "TENA MARTIN, ROSENDO", "TORGOFLY, S.L.", "TRATAMIENTOS AGRICOLAS SAN JUAN S.L", "TRATAMIENTOS DEL GUADALQUIVIR, S.L.", "TRATAMIENTOS GUMALBA, S.L.", "UTREAGRO Y ASOCIADOS, S.L.", "VALENZUELA Y COMPAÑIA, S.A.", "VIAGRO, S.A.", "VILLALTA COTILLAS, JOSE", "VIVEROS LA MEZQUITA, S.L.", "ZARCO CHAVEZ, PEDRO"], "TECNICOS": ["Alfredo Alameda", "Jaume Carrera", "Cecilio Fernández", "Alejandro Navarro", "Amparo Correcher", "Anna Pedró", "Fernando del Riquelme", "Federico Martínez", "Javier Cerveró", "José Ramón Gallego", "Ivan Laiz", "Luis Carlos Mateo", "Martín Fuentes", "Miquel Sans", "Manuel Pedrón", "Pedro García"], "ACTIVIDAD": ["Agricultor", "Exportador-Productor", "Venta de fitosanitarios", "Cooperativa", "Bodega", "Asesor Independiente"], "PUESTO": ["Gerencia", "Técnico de Campo", "Departamento de Compras", "Director Técnico", "Comercial", "Departamento de Calidad"], "TIPO_ENSAYO": ["Eficacia frente a producto competidor", "Spray Program", "Eficacia en mezcla", "AgCelence", "Selectividad", "Variedades", "Otros"], "RECOMENDACION": ["Técnico del Distribuidor", "Técnico de la Cooperativa", "Asesor Independiente", "Técnico de mi finca", "HOJA 2"], "TIPO_EVALUACION": ["DESECHOS", "% IMPUREZAS", "PESO RAIZ ADVENTICIAS", "# ADV ROOT", "Nº TALLOS CON UNA ESPIGA", "ESPIGA BLANCA", "EMERGENCIA", "ACLAREO", "RESIDUO DE PULV EN CARA SUPERIOR", "RESIDUO DE PULV EN CARA INFERIOR", "POBLACIÓN (Nº ESPIGAS/M2)", "MANCHAS EN LAS HOJAS", "ESTADO DE LAS HOJAS", "COMPARACIÓN", "CONTROL DE INSECTOS BENEFICIOSOS", "CONTROL", "VIGOR DE LA PLANTA", "FOTOSÍNTESIS", "SUPERFICIE FOLIAR NECROTIZADA", "DEFOLIACIÓN", "DESARROLLO DEL ÁRBOL", "HOJA MÁS JOVEN ATACADA", "RENDIMIENTO POR ESPIGA (G)", "RENDIMIENTO DE HOJAS", "RENDIMIENTO BRUTO (QM/HA)", "RACIMOS EN EL SUELO (KG/PARCELA)", "COSECHA (DM/HA)", "RENDIMIENTO (KG/PARCELA)", "YLD (GR EQUIV)", "VENDIMIA PRINCIPAL (KG/PARCELA)", "COSECHA NETA (DT/HA)", "PESO POR PIEZA", "PREVENDIMIA (KG/PARCELA)", "COSECHA POR VIÑA (KG/VIÑA)", "HAGBERG FALL NO", "ENCAMADO MODERADO", "PODREDUMBRE DEL FRUTO", "COLOR DEL FRUTO", "GRIETAS EN FRUTO", "FRUTAS EN EL SUELO", "COBERTURA MALEZAS", "GLUCOSINOLATE", "SUPERFICIE FOLIAR VERDE", "LONGITUD DEL TALLO", "PESO ESPECÍFICO POR HECTOLITRO", "CONTENIDO DE MATERIA ORGÁNICA", "PESO RAÍZ PRINCIPAL", "ANGULO DE INCLINACIÓN", "INFECCIÓN", "DIAMETRO DE ENTRENUDO", "LONGITUD DEL ENTRENUDO", "DENSIDAD DE GERMINACIÓN", "Nº GRANOS POR ESPIGA", "LODGING >45 °", "LODGING <45 º", "ENCAMADO", "AREA DE ENCAMADO", "ANGULO DE ENCAMADO", "LONGITUD DE ESPIGA", "RENDIMIENTO POST-LIMPIEZA", "VOLÚMEN NÓDULOS RADICULARES", "NÚMERO", "CONTENIDO DE ACEITE", "CEPAS POR PARCELA", "COBERTURA DEL CULTIVO", "DIAMETRO DE PLANTA", "FRECUENCIA DE LA FITOTOXICIDAD", "FITOTOXICIDAD", "VALOR DEL PH", "POBLACIÓN INSECTOS BENEFICIOSOS", "CONSUMO DE PRODUCTO", "CALIDAD DEL PRODUCTO", "CONT.CR.PROT.FO", "SEDIMENTACION", "CALIBRE>1.0MM", "CALIBRE>1.5MM", "CALIBRE>1.6MM", "CALIBRE>1.7MM", "CALIBRE>1.8MM", "CALIBRE>1.9MM", "CALIBRE>2.0MM", "CALIBRE>2.2MM", "CALIBRE>2.3MM", "CALIBRE>2.5MM", "CALIBRE>2.8MM", "CALIBRE>3.0MM", "CALIBRE>3.25MM", "CALIBRE>3.5MM", "CALIBRE>4.0MM", "CALIBRE>4.5MM", "CALIBRE>5.0MM", "CALIBRE>5.5MM", "CALIBRE>6.0MM", "CALIBRE>6.5MM", "CALIBRE>7.0MM", "CALIBRE>7.5MM", "CALIBRE>8.0MM", "CALIBRE>8.5MM", "CALIBRE<10MM", "CALIBRE<11MM", "CALIBRE<12MM", "CALIBRE<13MM", "CALIBRE<14MM", "CALIBRE<15MM", "CALIBRE<16MM", "CALIBRE<17MM", "CALIBRE<18MM", "CALIBRE<19MM", "CALIBRE<20MM", "CALIBRE<25MM", "CALIBRE<28MM", "CALIBRE<35MM", "CALIBRE<40MM", "CALIBRE<45MM", "CALIBRE<50MM", "CALIBRE<55MM", "CALIBRE<60MM", "CALIBRE<65MM", "CALIBRE<70MM", "CALIBRE<75MM", "CALIBRE<80MM", "CALIBRE<85MM", "CALIBRE<90MM", "CALIBRE<95MM", "CALIBRE>10MM", "CALIBRE>11MM", "CALIBRE>12MM", "CALIBRE>13MM", "CALIBRE>14MM", "CALIBRE>15MM", "CALIBRE>16MM", "CALIBRE>17MM", "CALIBRE>18MM", "CALIBRE>19MM", "CALIBRE>20MM", "CALIBRE>25 MM", "CALIBRE>28MM", "CALIBRE>35MM", "CALIBRE>40MM", "CALIBRE>45 MM", "CALIBRE>50MM", "CALIBRE>55MM", "CALIBRE>60MM", "CALIBRE>65MM", "CALIBRE>70MM", "CALIBRE>75MM", "CALIBRE>80MM", "CALIBRE>85MM", "CALIBRE>90MM", "CALIBRE>95MM", "CALIBRE=10CM", "CALIBRE=11CM", "CALIBRE=12CM", "CALIBRE=13CM", "CALIBRE=14CM", "CALIBRE=15CM", "CALIBRE=16CM", "CALIBRE=17CM", "CALIBRE=18CM", "CALIBRE=19CM", "CALIBRE=20CM", "CALIBRE<1.0MM", "CALIBRE<1.5MM", "CALIBRE<1.6MM", "CALIBRE<1.7MM", "CALIBRE<1.8MM", "CALIBRE<1.9MM", "CALIBRE<2.0MM", "CALIBRE<2.2MM", "CALIBRE<2.35MM", "CALIBRE<2.5MM", "CALIBRE<2.8MM", "CALIBRE<3.0MM", "CALIBRE<3.25MM", "CALIBRE<3.5MM", "CALIBRE<4.0MM", "CALIBRE<4.5MM", "CALIBRE<5.0MM", "CALIBRE<5.5MM", "CALIBRE<6.0MM", "CALIBRE<6.5MM", "CALIBRE<7.0MM", "CALIBRE<7.5MM", "CALIBRE<8.0MM", "CALIBRE<8.5MM", "CLASE 1, Nº", "CLASE 2, Nº", "CLASE 3, Nº", "CLASE 4, Nº", "CLASE 5, Nº", "CLASE 6, Nº", "RESISTENCIA AL ENCAMADO", "TAMAÑO DE LA MUESTRA", "TKW MOIST", "PESO DE 1000 GRANOS", "CONTENIDO MATERIA SECA (DIF FR 86%)", "CONTENIDO CAO (%)", "CONTENIDO CARBONO (%)", "CONTENIDO CLORO (%)", "CONTENIDO EN K2O (%)", "CONTENIDO GLUCOSA (%)", "CONTENIDO MGO (%)", "CONTENIDO NA2O (%)", "CONTENDIO NO3-N (%)", "CONTENIDO P205 (%)", "CONTENIDO EN SILICONA (%)", "CONTENIDO AZUFRE (%)", "CONTENIDO MATERIA SECA (%)", "PESO ESPECÍFICO POR 1/4 LITRO", "RENDIMIENTO PRE-LIMPIEZA", "ALTURA PLANTA", "PESO DE 250 GRANOS", "FL.LF.,DIST.EAR", "Nº FRUTOS ABORTADOS POR PLANTA", "Nº HOJAS ABORTADAS", "POSICIÓN DE LA ESPIGA", "CEREALES VOLUNTARIOS", "CONTENIDO DE ALCALOIDES (NICOTINA)", "GRADO DE ALCOHOL", "ALUMINIO", "CONTENIDO EN NITROGENO AMINO", "Nº HOJAS POR BROTE", "Nº FRUTOS POR PLANTA", "Nº NUDOS", "Nº SEMILLAS POR MACETA", "Nº FRUTOS DEMASIADO MADUROS", "Nº FRUTOS MADUROS", "Nº NUDOS REPROD. POR PLANTA", "# STEMS", "Nº BROTES POR PARCELA", "Nº FRUTOS NO MADUROS", "Nº NUDOS VEGETAT. POR PLANTA", "MELLOWING", "Nº PLANTAS POR METRO", "AREA", "AREA U.DIS.PRES", "REBROTE DE LOS BOTONES", "GERMINACIÓN EN LA ESPIGA", "AWNS TWISTED", "PESO FRUTA", "BAIT CONSUMPT.", "BAIT POPULAT.", "GRADOS BARBO", "PLANTAS ESTÉRILES", "GRADOS BAUME", "Nº BAYAS POR RACIMO", "VOLÚMEN DE 1 BAYA/GRANO", "PESO DE 100 BAYAS/GRANOS", "BIOMASA", "GRANOS ROTOS", "PESO DE LAS HOJAS", "CAIDA DE LAS HOJAS", "DECOLORACIÓN DE LAS HOJAS", "FLORES", "Nº HOJAS POR PARCELA", "BORON", "BRIX (%)", "BROKEN STALK", "RENDIMIENTO ALGODÓN CÁPSULAS MOMIFICADAS", "CALCIO", "LONGITUD DEL SARMIENTO", "CANOPY SHAPE", "CANOPY WIDTH", "CIRCUNSFERENCIA", "Nº RACIMOS POR NUDO", "PESO DE UN RACIMO", "Nº RACIMOS POR PLANTA", "COBALTO", "COBRE", "C-RESPIRATION", "CONTENIDO EN CLOROFILA (H)", "CONTENIDO EN CLOROFILA (M)", "CONTENIDO TOTAL EN CLOROFILA", "RISING OF DOUGH", "FIRMEZA / ELASTICIDAD", "PRESSURE MAX.", "FORCE OF DOUGH", "DEFORMACIONES DE LAS HOJAS", "PLANTAS MUERTAS POR PARCELA", "DESECACIÓN", "DESARROLLO INFLORESCENCIA", "Nº HILLS INFECTADOS", "DIAMETRO A LO ANCHO", "DIAMETRO", "DIAMETRO A LO LARGO", "PESO ESPECÍFICO", "DIGESTABILIDAD SUSTRATO ORGANICO (%)", "VOMITOXIN CONT.", "RESISTENCIA A LA SEQUÍA", "EARS STUCK", "DAÑO POR COMIDA", "ESTADO DE CRECIMIENTO BBCH", "RESISTENCIA ELÉCTRICA (K.OMIOS)", "ELONGACIÓN DE LA FIBRA", "MASA FOLIAR AMARILLENTA", "YENLOS", "YIELD,ECONOM.", "REL CROP ERECT", "PESO CAIDA DE FRUTOS", "PESO PLANTA TOTAL POR PARCELA (VERDE)", "PESO PLANTA TOTAL POR PARCELA (SECA)", "RENDIMIENTO DE PAJA", "COSECHA POR ÁRBOL", "PESO DE INTRENUDOS", "RENDIMIENTO DE BROTES", "RENDIMIENTO DE TUBERCULOS", "PESO RAIZ POR PARCELA (MATERIA VERDE)", "PESO RAIZ POR PARCELA (MATERIA SECA)", "ESTADO DE CRECIMIENTO BBA", "MODIFICACIÓN DEL COLOR", "FLAG LF-TIP EAR", "FLOWER BUD SET", "CAIDA DE FRUTOS", "FEEDING ACT.", "INDICE DE GLUTEN SOLIDO/TOTAL (%)", "CONTENIDO DE GLUTEN SÓLIDO (GR)", "FUERZA DE RETENT. DE FRUTOS", "CONTENIDO AGUA (%)", "GLUTEN,MOIST", "LONGITUD 50% DE LA FIBRA", "SOLIDEZ DE LA FIBRA", "FL ABSCISSION", "SABOR", "DIAMETRO DE LAS FLORES", "GLUTEN,FLUID", "AREA POR VIÑA", "ACID DET FIBER", "NEUTR.DET.FIBER", "REL.FEED VALUE", "Nº MORDEDURAS POR PLANTA", "GLOMÉRULO FLORAL CON FRUTOS", "FRUTAS TOTALMENTE DESARROLLADAS", "DEGRADACIÓN INTERNA", "FIRMEZA DEL FRUTO", "DIAMETRO FRUTO A LO LARGO", "LONGITUD DEL FRUTO", "FRUTOS VENDIBLES", "Nº FRUTOS POR KG", "DAÑOS POR HELADA", "DIAMETRO FRUTO A LO ANCHO", "FRUTOS PODRIDOS", "FRUTAS ATROFIADAS", "% ECHAR FRUTOS (SEMILLA)", "PESO FRESCO", "ACLAREO MANUAL DE FRUTOS (Nº)", "PESO DE 100 FRUTOS", "PRODUCCIÓN DE GAS (ML)", "CÁPSULAS VERDES POR PLANTA", "CLOROSIS", "Nº FRUTOS SANOS", "CONTENIDO DE GLUTEN TOTAL (GR)", "#REM HEALTHY PL", "PESO FRUTOS POR PLANTA", "PESO DE FRUTOS DEMASIADO MADUROS", "PESO DE FRUTOS MADUROS", "PESO POR PIEZA (KG)", "PESO DE FRUTOS NO MADUROS", "PESO GRANOS (FRUTOS NO MADUROS)", "PESO GRANOS POR ESPIGA", "PESO DE GRANOS (MUESTRA)", "VIDROSIDAD", "FRUTOS VERDES (%)", "CALIDAD GRANOS ATACADOS POR FUSARIUM", "GRAINS,SPOTTED", "CRECIMIENTO DESPUES DE LA APLICACIÓN", "ESTADO DE CRECIMIENTO MÁXIMO (PIAF)", "ESTADO DE CRECIMIENTO MÍNIMO (PIAF)", "Nº HILLS SANOS", "GRADO 1, NUMERO", "GRADO 1, PESO", "GRADO 1, PESO POST-LIMPIEZA", "GRADO 1, PESO PRE-LIMPIEZA", "GRADO 2, NUMERO", "GRADO 2, PESO", "GRADO 3, NUMERO", "GRADO 3, PESO", "GRADO 4, NUMERO", "GRADO 4, PESO", "GRADO 5, NUMERO", "GRADO 5, PESO", "Nº NO VENDIBLES", "PESO NO VENDIBLES", "ALTURA PRIMER NUDO FLORAL", "LONGITUD DEL TALLO PRINCIPAL", "DAÑO DE INSECTOS EN LA SUPERFICIE DE LA HOJA", "HIERRO", "DIGESTIBILIDAD", "PRODUCCIÓN DE ZUMO (ML)", "CADMIO", "Nº PLANTAS EMERGIDAS POR VASO", "CAPACIDAD GERMINATIVA", "% EMERGENCIA", "CAPACIDAD GERMINATIVA DE LAS ESPORAS", "Nº GRANOS GERMINADOS", "GRAIN HARDNESS", "GRANO RAQUÍTICO", "DOBLADO DE ESPIGA", "ROTURA DE TALLO", "COSTE (EURO)", "RENDIMIENTO DE MAZORCA (QM/HA)", "HEAD FIRMNESS", "PESO DE GRANO", "COSTE (DM)", "Nº FRUTAS INFECTADAS", "SOIL RESPIRAT.", "CONTENIDO MATERIA SECA (LABORATORIO)", "ALTURA DE HILERAS", "WIDTH", "Nº RAMOS POR BROTE", "Nº HOJAS POR PLANTA", "LEAD", "ESP. DE LA CASCARA DEL FRUTO", "NECROSIS FOLIARES", "LONGITUD DE LA HOJA", "PESO / HOJA", "#EMERG-COT.N.UN", "AREA DE LAS HOJAS/PLANTA", "SUPERFICIE FOLIAR", "#EMERG-COT.UNFO", "ANCHURA DE LA HOJA", "RELACIÓN LARGO/DIAMETRO FRUTA", "CONDUCTIVIDAD", "LENGTH", "PUDRICIÓN DE LENTICELAS", "RENDIMIENTO DE LINT", "PESO DE LAS ESPATAS", "MAGNESIO", "MANGANESO", "BIOMASS MICROB.", "DEFICIENCIA DE MAGNESIO", "ÍNDICE MICRONAIRE", "RENDIMIENTO NETO-MEDIO EN TESTIGO", "MOLIBDEMO", "NOD.ABOVE W.BL.", "DENSIDAD DEL CÉSPED", "CONTENIDO DE SODIO", "N-BALANCE", "NITRÓGENO EN SUELO", "CÁPSULAS RESTANTES DE RECOGIDA", "NITROGENO,SUMINISTRADO/TRAT.", "NECROSIS DE LAS HOJAS", "NET ENERG.LACT.", "Nº FLORES POR PLANTA", "EXTRACTIVOS NO NITROGENADOS", "CONTENIDO NITRÓGENO M.F. (%)", "CONTENIDO EN NITROGENO MATERIA SECA (%)", "CONTENIDO DE NIVALENOL", "Nº BOTONES FLORALES POR PLANTA", "NODULACION", "Nº DE PLANTAS", "OBJETOS ALMACENADOS SANOS (KG)", "OBJETOS ATACADOS (KG)", "CÁPSULAS DAÑADAS POR INSECTOS", "GRADOS OECHSLE", "Nº HOJAS CON DAÑO", "PRESENCIA DE ORGANISMOS", "DAMAGE, OVIPOS.", "PESO EN AGUA", "VALUE FOR DOUGH", "VALUE TOTAL", "Nº PANÍCULAS POR PARCELA", "% DE LINT", "N TOT,H2O PERCO", "NH4-N,H2O PERCO", "NO3-N,H2O PERCO", "ORG-N,H2O PERCO", "PERCOL.WATER", "PLANTAS EN FLORACIÓN", "CORTE DE PLANTAS", "FÓSFORO", "EFECTOS PSICOLÓGICOS", "RENDIMIENTO (ALGODÓN SEGUNDA RECOGIDA)", "RENDIMIENTO (SOLO ALGODÓN)", "DECOLORACIÓN DEL TUETANO", "CONT.YELLOW PIG", "LODGING, FLAT", "Nº PLANTAS ENCAMADAS", "HT OF LESION", "PLANTAS POR HILERA/LINEO", "POTASIO", "CONTENIDO POTASIO (MEQ/100 G)", "PRECIO (DM/DT)", "PRECIO (EURO/DT)", "PESO DEL CORTE POR PLANTA", "PESO MAZORCA SIN ESPATAS", "CALIDAD DEL CULTIVO", "CÁPSULAS PODRIDAS", "REVERDECIMIENTO", "MADURACIÓN 0-10", "RECOVER.SUGAR", "RED.SUGAR", "GRAIN,MILLED", "ARROZ: GRANOS INTACTOS", "RAPID-MIX-TEST", "CRUDE FIBER,D.M", "ENRAIZAMIENTO DE LAS ESTACAS", "GRANOS NORMALES Y GERMINADOS", "ACIDEZ (G/L)", "Nº SEMILLAS POR PLANTA", "Nº ESPIGAS O PANÍCULAS", "Nº GRANOS", "GRANOS CON GERMINACIÓN NORMAL", "ACIDEZ (%)", "RENDIMIENTO ALGODÓN BRUTO", "VASTAGOS", "PESO DE 100 GRANOS", "SEGR.PHYTOX<10%", "SEGREGATION (%)", "SEGREGATION(Y/N", "SELEN", "SHRINKAGE", "SILICONA", "TAMAÑO DE LAS PLANTAS", "SMELL", "SODIO", "CONTENIDO DEL MOSTO", "LARGO DE LA FIBRA, 2,5%", "Nº ESPORAS EN 20 PUNTOS", "SHOOT, DRY WT", "SHOOT, FR WT", "LONGITUD DE TALLO/BROTE/TRONCO", "CONTENIDO ALMIDÓN (%)", "DIAMETRO FRUTO", "RIGIDEZ DEL TALLO", "BITTER PIT EXTERNA", "BITTER PIT INTERNA", "PESO DE LA MUESTRA", "Nº RAMAS CON FRUTOS POR PLANTA", "Nº RAMAS SIN FRUTOS POR PLANTA", "LONGITUD DEL RETOÑO", "Nº RETOÑOS POR PLANTA", "CONTENIDO SULFATO (%)", "AZUFRE", "VIGOR DE CRECIMIENTO", "PL W TASS EXP", "GRANOS HUECOS", "Nº TOTAL DE CÁPSULAS", "Nº YEMAS FOLIARES", "TEMPERATURA", "FACT. POR CONVERSIÓN (LB/BU)", "THICKNESS", "Nº HIJUELOS POR PLANTA", "Nº HIJUELOS / M2", "TAMAÑO MACETA (CM2)", "Nº DE VAINAS", "TRAIL ACTIVITY", "INDICE DE TRANSPIRACION", "IMPUREZAS", "LONGITUD RETOÑO MEDIO POR ÁRBOL (CM)", "LONGITUD TOTAL DE BROTES POR ÁRBOL", "CRECIMIENTO LONGITUDINAL DEL RETOÑO", "#SPROUTS W.REGR", "MATERIA SECA DE LAS HOJAS (%)", "DRY WT", "COB, DM CONT", "MATERIA SECA REMOLACHA AZUCARERA (%)", "DRY BORDERS", "MATERIA SECA DE VAINAS", "Nº TUBERCULOR POR PARCELA", "ENERGÍA METABOLIZABLE", "SANO", "UNIFORMIDAD", "USDA GRADE", "VARIABLE DESCRITA EN COMENTARIOS", "VAPOR EFFECTS", "CONTENIDO CALCIO (%)", "CONTENIDO POTASIO (%)", "CONTENIDO MAGNESIO (%)", "CONTENIDO SODIO (%)", "CONTENIDO FOSFORO (%)", "SE CONTENT", "CONTENIDO DE VITAMINA C (PPM)", "VOLÚMEN", "CONSUMO DE AGUA (ML/MACETA)", "EFICACIA DE EMPLEO DE AGUA", "PESO DE CÁPSULAS", "VALOR DEL RENDIMIENTO (DM/HA)", "VALOR COSECHA (EURO/ÁRBOL)", "VALOR COSECHA (EURO/HA)", "PESO", "MARCHITEZ POR ENFERMEDAD", "UNIFORMIDAD DE LA ALTURA", "ESPACIO LIBRE ENTRE HILERAS", "ALTURA CREC. HASTA MAZORCA", "MATERIA SECA DE LA RAZÍ", "REDUCCIÓN DEL CRECIMIENTO", "MATERIA FRESCA DE LA RAÍZ", "PESO DE LAS RAICES", "LONGITUD DE RAÍZ", "ZEARALEN CONT.", "EFICACIA DE LA COSECHA", "EXTRACTIVOS SIN AZÚCAR", "ZINC", "PLANTAS DESPLOMADAS", "PRODUCCIÓN ANORMAL (BROTES/TUBERCULO)", "CONTENIDO AZUCAR (%)", "ZWIABP"]};
+</script>
+<script>
+/* =========================================================
+   FICHA DE ENSAYOS · BASF NUNHEMS — app.js
+   Datos compartidos guardados en una Google Sheet propia (vía
+   Apps Script), para que varias personas trabajen sobre los
+   mismos ensayos sin depender de Claude ni de una cuenta.
+   Nombre de usuario guardado localmente en cada móvil (localStorage).
+   ========================================================= */
+
+// URL de tu Apps Script publicado (paso "Implementar > Aplicación web").
+// Si alguna vez lo vuelves a publicar y cambia la URL, actualízala aquí.
+const GAS_URL = "https://script.google.com/macros/s/AKfycbwZ6qdRYwyXakjCXyVj0YCZw1qKJqOmuAamLmswseGRTm4TXR14P0j3Bn4bXCAOwYDlBQ/exec";
+
+const state = {
+  view: "home",          // home | trial
+  trialTab: "resumen",   // resumen | datos | protocolo | seguimiento | fotos
+  trialId: null,
+  trials: [],             // index
+  trial: null,            // full record of open trial
+  photos: [],              // photos of open trial
+  userName: null,
+  modal: null,             // {type:'foto'|'protocolo'|'seguimiento', ...}
+  saving: false,
+};
+
+const $app = document.getElementById("app");
+
+/* ---------------- storage helpers ----------------
+   shared=true  -> vive en la Google Sheet (todo el equipo la ve)
+   shared=false -> vive solo en este navegador/móvil (localStorage)
+   Todas las llamadas "shared" envían el PIN del equipo; el propio
+   Google Apps Script lo comprueba y rechaza la petición si no coincide.
+------------------------------------------------------ */
+async function sGet(key, shared) {
+  if (!shared) {
+    try {
+      const v = localStorage.getItem("bn_" + key);
+      return v ? JSON.parse(v) : null;
+    } catch (e) { return null; }
+  }
+  try {
+    const res = await fetch(`${GAS_URL}?action=get&key=${encodeURIComponent(key)}&pin=${encodeURIComponent(state.pin || "")}`);
+    const data = await res.json();
+    if (data && data.error) { console.error("GAS get rejected:", data.error); return null; }
+    return data && data.found ? JSON.parse(data.value) : null;
+  } catch (e) {
+    console.error("GAS get failed", key, e);
+    return null;
+  }
+}
+async function sSet(key, value, shared) {
+  if (!shared) {
+    try {
+      localStorage.setItem("bn_" + key, JSON.stringify(value));
+      return true;
+    } catch (e) { return false; }
+  }
+  try {
+    const res = await fetch(GAS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" }, // evita el preflight CORS
+      body: JSON.stringify({ action: "set", key, value: JSON.stringify(value), pin: state.pin || "" }),
+    });
+    const data = await res.json();
+    if (data && data.error) { console.error("GAS set rejected:", data.error); return false; }
+    return true;
+  } catch (e) {
+    console.error("GAS set failed", key, e);
+    return false;
+  }
+}
+async function sDelete(key, shared) {
+  if (!shared) {
+    try { localStorage.removeItem("bn_" + key); } catch (e) {}
+    return;
+  }
+  try {
+    await fetch(GAS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action: "delete", key, pin: state.pin || "" }),
+    });
+  } catch (e) { console.error("GAS delete failed", key, e); }
+}
+async function sList(prefix, shared) {
+  if (!shared) {
+    try {
+      const keys = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k.indexOf("bn_" + (prefix || "")) === 0) keys.push(k.slice(3));
+      }
+      return keys;
+    } catch (e) { return []; }
+  }
+  try {
+    const res = await fetch(`${GAS_URL}?action=list&prefix=${encodeURIComponent(prefix || "")}&pin=${encodeURIComponent(state.pin || "")}`);
+    const data = await res.json();
+    if (data && data.error) { console.error("GAS list rejected:", data.error); return []; }
+    return (data && data.keys) || [];
+  } catch (e) {
+    console.error("GAS list failed", prefix, e);
+    return [];
+  }
+}
+/* Llamadas específicas para gestionar el PIN, que nunca revelan su valor real */
+async function gasHasPin() {
+  try {
+    const res = await fetch(`${GAS_URL}?action=haspin`);
+    const data = await res.json();
+    return !!(data && data.exists);
+  } catch (e) { return false; }
+}
+async function gasCheckPin(candidate) {
+  try {
+    const res = await fetch(`${GAS_URL}?action=checkpin&pin=${encodeURIComponent(candidate)}`);
+    const data = await res.json();
+    return !!(data && data.valid);
+  } catch (e) { return false; }
+}
+async function gasSetPin(newPin, currentPin) {
+  try {
+    const res = await fetch(GAS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ action: "setpin", newPin, currentPin: currentPin || "" }),
+    });
+    const data = await res.json();
+    return !!(data && data.success);
+  } catch (e) { return false; }
+}
+
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+function todayISO() {
+  return new Date().toISOString().slice(0, 10);
+}
+function fmtDate(iso) {
+  if (!iso) return "—";
+  const [y, m, d] = iso.split("-");
+  return `${d}/${m}/${y}`;
+}
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => t.classList.remove("show"), 1600);
+}
+function escapeHtml(s) {
+  if (s === null || s === undefined) return "";
+  return String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+/* ---------------- bootstrap / user name ---------------- */
+async function boot() {
+  const pinOk = await checkPinGate();
+  if (!pinOk) return; // pinGate div handles the UI; boot resumes via continueBootAfterPin()
+  await continueBootAfterPin();
+}
+async function continueBootAfterPin() {
+  const profile = await sGet("perfil", false);
+  if (profile && profile.name) {
+    state.userName = profile.name;
+    document.getElementById("nameGate").style.display = "none";
+    await loadTrialsIndex();
+    render();
+  } else {
+    document.getElementById("nameGate").style.display = "flex";
+  }
+}
+
+/* ---------------- PIN gate (comprobado en el servidor, no solo en el navegador) ---------------- */
+async function checkPinGate() {
+  const exists = await gasHasPin();
+  const personal = await sGet("pin_ok", false); // recuerda que este dispositivo ya lo introdujo bien
+
+  if (!exists) {
+    // Todavía no hay PIN configurado en esta Sheet: la primera persona en abrirlo crea uno.
+    document.getElementById("pinGate").style.display = "flex";
+    document.getElementById("pinGateText").textContent =
+      "Todavía no hay un PIN configurado para este equipo. Crea uno ahora (compártelo solo con tu equipo, por ejemplo por WhatsApp).";
+    document.getElementById("pinBtn").textContent = "Crear PIN y entrar";
+    document.getElementById("pinBtn").onclick = async () => {
+      const v = document.getElementById("pinInput").value.trim();
+      if (v.length < 4) { showPinError("El PIN debe tener al menos 4 caracteres"); return; }
+      const ok = await gasSetPin(v, "");
+      if (!ok) { showPinError("No se pudo crear el PIN. Revisa tu conexión."); return; }
+      state.pin = v;
+      await sSet("pin_ok", { pin: v }, false);
+      document.getElementById("pinGate").style.display = "none";
+      await continueBootAfterPin();
+    };
+    return false;
+  }
+
+  if (personal && personal.pin && await gasCheckPin(personal.pin)) {
+    state.pin = personal.pin;
+    return true; // este dispositivo ya lo tenía y sigue siendo válido
+  }
+
+  document.getElementById("pinGate").style.display = "flex";
+  document.getElementById("pinGateText").textContent = "Introduce el PIN de acceso de tu equipo para entrar a los ensayos.";
+  document.getElementById("pinBtn").textContent = "Entrar";
+  document.getElementById("pinBtn").onclick = async () => {
+    const v = document.getElementById("pinInput").value.trim();
+    const valid = await gasCheckPin(v);
+    if (valid) {
+      state.pin = v;
+      await sSet("pin_ok", { pin: v }, false);
+      document.getElementById("pinGate").style.display = "none";
+      await continueBootAfterPin();
+    } else {
+      showPinError("PIN incorrecto. Inténtalo de nuevo.");
+    }
+  };
+  return false;
+}
+function showPinError(msg) {
+  const el = document.getElementById("pinError");
+  el.textContent = msg;
+  el.style.display = "block";
+  document.getElementById("pinInput").value = "";
+  document.getElementById("pinInput").focus();
+}
+window.submitPin = function () { /* bound dynamically via pinBtn.onclick above */ };
+
+window.saveName = async function () {
+  const v = document.getElementById("nameInput").value.trim();
+  if (!v) return;
+  state.userName = v;
+  await sSet("perfil", { name: v }, false);
+  document.getElementById("nameGate").style.display = "none";
+  await loadTrialsIndex();
+  render();
+};
+
+/* ---------------- data loading ---------------- */
+async function loadTrialsIndex() {
+  const idx = await sGet("ensayos_index", true);
+  state.trials = idx || [];
+}
+async function loadTrial(id) {
+  const data = await sGet("ensayo:" + id, true);
+  state.trial = data || emptyTrial();
+  const meta = state.trials.find(t => t.id === id) || {};
+  state.trial.meta = meta;
+  await loadPhotos(id);
+}
+async function loadPhotos(trialId) {
+  const ids = (state.trial && state.trial.fotoIds) || [];
+  const photos = [];
+  for (const pid of ids) {
+    const p = await sGet("foto:" + pid, true);
+    if (p) photos.push(p);
+  }
+  photos.sort((a, b) => (b.fecha || "").localeCompare(a.fecha || ""));
+  state.photos = photos;
+}
+function emptyTrial() {
+  return {
+    datos: {}, protocolo: [], seguimiento: [], fotoIds: [], colaboradores: [],
+  };
+}
+async function saveTrial() {
+  const { meta, ...rest } = state.trial;
+  await sSet("ensayo:" + state.trialId, rest, true);
+}
+async function saveTrialsIndex() {
+  await sSet("ensayos_index", state.trials, true);
+}
+
+/* ---------------- permissions ---------------- */
+function isOwner() {
+  return !!(state.trial && state.trial.meta && state.trial.meta.autor === state.userName);
+}
+function isCollaborator() {
+  return !!(state.trial && (state.trial.colaboradores || []).includes(state.userName));
+}
+function canEdit() {
+  return isOwner() || isCollaborator();
+}
+
+/* ---------------- create / open trial ---------------- */
+window.createTrial = async function () {
+  const id = uid();
+  const ref = "DEMO-" + new Date().getFullYear() + "-" + (state.trials.length + 1).toString().padStart(3, "0");
+  const meta = { id, referencia: ref, cultivo: "", finca: "", agricultor: "", tecnico: "", creado: todayISO(), autor: state.userName };
+  state.trials.unshift(meta);
+  await saveTrialsIndex();
+  await sSet("ensayo:" + id, emptyTrial(), true);
+  openTrial(id);
+};
+window.openTrial = async function (id) {
+  state.trialId = id;
+  state.view = "trial";
+  state.trialTab = "resumen";
+  await loadTrial(id);
+  render();
+};
+window.goHome = async function () {
+  state.view = "home";
+  state.trialId = null;
+  state.trial = null;
+  await loadTrialsIndex();
+  render();
+};
+window.setTrialTab = function (tab) {
+  state.trialTab = tab;
+  render();
+};
+window.deleteTrial = async function (id, ev) {
+  if (ev) ev.stopPropagation();
+  const meta = state.trials.find(t => t.id === id);
+  if (meta && meta.autor && meta.autor !== state.userName) {
+    showToast("Solo " + meta.autor + " (quien creó el ensayo) puede eliminarlo");
+    return;
+  }
+  if (!confirm("¿Eliminar este ensayo y todos sus datos? Esta acción no se puede deshacer.")) return;
+  const data = await sGet("ensayo:" + id, true);
+  if (data && data.fotoIds) {
+    for (const pid of data.fotoIds) await sDelete("foto:" + pid, true);
+  }
+  await sDelete("ensayo:" + id, true);
+  state.trials = state.trials.filter(t => t.id !== id);
+  await saveTrialsIndex();
+  render();
+};
+
+/* ---------------- autosave datos generales ---------------- */
+let saveTimer = null;
+window.onFieldChange = function (field, value) {
+  if (!canEdit()) { showToast("Solo puede editar quien creó este ensayo"); render(); return; }
+  state.trial.datos[field] = value;
+  const pill = document.getElementById("savepill");
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async () => {
+    await saveTrial();
+    // keep index summary fields in sync
+    const meta = state.trials.find(t => t.id === state.trialId);
+    if (meta) {
+      meta.cultivo = state.trial.datos.cultivo || "";
+      meta.finca = state.trial.datos.finca || "";
+      meta.tecnico = state.trial.datos.tecnico || "";
+      meta.agricultor = [state.trial.datos.nombre, state.trial.datos.apellidos].filter(Boolean).join(" ");
+      meta.referencia = state.trial.datos.referencia || meta.referencia;
+      await saveTrialsIndex();
+    }
+    if (pill) { pill.classList.add("show"); setTimeout(() => pill.classList.remove("show"), 1200); }
+  }, 500);
+};
+
+/* ---------------- collaborators ---------------- */
+window.addColaborador = async function () {
+  const input = document.getElementById("colabInput");
+  const name = (input.value || "").trim();
+  if (!name) return;
+  state.trial.colaboradores = state.trial.colaboradores || [];
+  if (!state.trial.colaboradores.includes(name) && name !== state.trial.meta.autor) {
+    state.trial.colaboradores.push(name);
+    await saveTrial();
+  }
+  input.value = "";
+  render();
+};
+window.removeColaborador = async function (name) {
+  state.trial.colaboradores = (state.trial.colaboradores || []).filter(c => c !== name);
+  await saveTrial();
+  render();
+};
+
+/* ---------------- protocolo entries ---------------- */
+window.openProtocoloModal = function () {
+  if (!canEdit()) { showToast("Solo puede editar quien creó este ensayo"); return; }
+  state.modal = { type: "protocolo", producto: "", dosis: "", semillas: "", napp: "", fecha: todayISO(), obs: "" };
+  render();
+};
+window.saveProtocoloEntry = async function () {
+  if (!canEdit()) { showToast("Solo puede editar quien creó este ensayo"); return; }
+  const m = state.modal;
+  if (!m.producto) { showToast("Indica el producto o semilla"); return; }
+  state.trial.protocolo.unshift({
+    id: uid(), producto: m.producto, dosis: m.dosis, semillas: m.semillas,
+    napp: m.napp, fecha: m.fecha, obs: m.obs, autor: state.userName,
+  });
+  await saveTrial();
+  state.modal = null;
+  render();
+  showToast("Producto añadido");
+};
+window.deleteProtocolo = async function (id) {
+  if (!canEdit()) { showToast("Solo puede editar quien creó este ensayo"); return; }
+  state.trial.protocolo = state.trial.protocolo.filter(p => p.id !== id);
+  await saveTrial();
+  render();
+};
+
+/* ---------------- seguimiento entries ---------------- */
+window.openSeguimientoModal = function () {
+  if (!canEdit()) { showToast("Solo puede editar quien creó este ensayo"); return; }
+  state.modal = { type: "seguimiento", fecha: todayISO(), bbch: "", parametro: "", valor: "", comentario: "" };
+  render();
+};
+window.saveSeguimientoEntry = async function () {
+  if (!canEdit()) { showToast("Solo puede editar quien creó este ensayo"); return; }
+  const m = state.modal;
+  if (!m.fecha) { showToast("Indica la fecha"); return; }
+  state.trial.seguimiento.unshift({
+    id: uid(), fecha: m.fecha, bbch: m.bbch, parametro: m.parametro,
+    valor: m.valor, comentario: m.comentario, autor: state.userName,
+  });
+  await saveTrial();
+  state.modal = null;
+  render();
+  showToast("Evaluación registrada");
+};
+window.deleteSeguimiento = async function (id) {
+  if (!canEdit()) { showToast("Solo puede editar quien creó este ensayo"); return; }
+  state.trial.seguimiento = state.trial.seguimiento.filter(s => s.id !== id);
+  await saveTrial();
+  render();
+};
+
+/* ---------------- fotos ---------------- */
+window.openFotoModal = function () {
+  if (!canEdit()) { showToast("Solo puede editar quien creó este ensayo"); return; }
+  state.modal = { type: "foto", fecha: todayISO(), bbch: "", comentario: "", dataUrl: null };
+  render();
+};
+window.handlePhotoFile = function (input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const img = new Image();
+    img.onload = function () {
+      const maxDim = 1280;
+      let w = img.width, h = img.height;
+      if (w > h && w > maxDim) { h = Math.round(h * maxDim / w); w = maxDim; }
+      else if (h > maxDim) { w = Math.round(w * maxDim / h); h = maxDim; }
+      const canvas = document.createElement("canvas");
+      canvas.width = w; canvas.height = h;
+      canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+      state.modal.dataUrl = canvas.toDataURL("image/jpeg", 0.65);
+      render();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+};
+window.saveFotoEntry = async function () {
+  if (!canEdit()) { showToast("Solo puede editar quien creó este ensayo"); return; }
+  const m = state.modal;
+  if (!m.dataUrl) { showToast("Selecciona o haz una foto"); return; }
+  const pid = uid();
+  await sSet("foto:" + pid, {
+    id: pid, trialId: state.trialId, fecha: m.fecha, bbch: m.bbch,
+    comentario: m.comentario, dataUrl: m.dataUrl, autor: state.userName,
+  }, true);
+  state.trial.fotoIds = state.trial.fotoIds || [];
+  state.trial.fotoIds.unshift(pid);
+  await saveTrial();
+  state.modal = null;
+  await loadPhotos(state.trialId);
+  render();
+  showToast("Foto guardada");
+};
+window.deleteFoto = async function (id) {
+  if (!canEdit()) { showToast("Solo puede editar quien creó este ensayo"); return; }
+  if (!confirm("¿Eliminar esta foto?")) return;
+  await sDelete("foto:" + id, true);
+  state.trial.fotoIds = (state.trial.fotoIds || []).filter(x => x !== id);
+  await saveTrial();
+  await loadPhotos(state.trialId);
+  render();
+};
+window.closeModal = function () { state.modal = null; render(); };
+window.updateModalField = function (field, value) { state.modal[field] = value; };
+
+/* ---------------- datalist helper ---------------- */
+function datalistOptions(arr) {
+  return arr.map(v => `<option value="${escapeHtml(v)}">`).join("");
+}
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+function render() {
+  if (state.view === "home") renderHome();
+  else renderTrial();
+  if (state.modal) renderModal(); else removeModal();
+}
+
+function removeModal() {
+  const ex = document.getElementById("modalRoot");
+  if (ex) ex.remove();
+}
+
+function renderHome() {
+  const trials = state.trials;
+  const cards = trials.length ? trials.map(t => {
+    const mine = t.autor === state.userName;
+    const badge = mine
+      ? `<span style="font-size:10px;font-weight:800;color:var(--mid);background:#E6F1EB;border-radius:6px;padding:2px 7px;">TUYO · EDITABLE</span>`
+      : `<span style="font-size:10px;font-weight:800;color:var(--muted);background:#EEF1EF;border-radius:6px;padding:2px 7px;">&#128065; SOLO LECTURA</span>`;
+    return `
+    <div class="trial-card" onclick="openTrial('${t.id}')">
+      <div class="body">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;">
+          <span class="trial-ref">${escapeHtml(t.referencia)}</span>${badge}
+        </div>
+        <h3>${escapeHtml(t.cultivo || "Cultivo sin definir")}</h3>
+        <div class="meta">${escapeHtml(t.finca || "Finca sin definir")} · ${escapeHtml(t.agricultor || "Sin agricultor")}</div>
+        <div class="meta">&#128100; Técnico: ${escapeHtml(t.tecnico || "sin asignar")} &nbsp;·&nbsp; Creado por ${escapeHtml(t.autor || "—")}</div>
+      </div>
+      ${mine ? `<button class="iconbtn" style="background:#fff;color:var(--danger);border:1px solid #f0d4d0;" onclick="deleteTrial('${t.id}', event)">&#128465;</button>` : ""}
+      <span class="chev">&#8250;</span>
+    </div>
+  `;
+  }).join("") : `
+    <div class="empty">
+      <div class="ic">&#127793;</div>
+      <div style="font-weight:700;color:var(--ink);margin-bottom:4px;">Todavía no hay ensayos</div>
+      <div style="font-size:13px;">Crea el primero para empezar a registrar el seguimiento en campo.</div>
+    </div>`;
+
+  $app.innerHTML = `
+    <div class="topbar">
+      <div class="row" style="justify-content:space-between;">
+        <div class="brand"><span class="sq"></span>BASF <small>· nunhems</small></div>
+      </div>
+      <h1>Mis ensayos</h1>
+      <div class="sub">${trials.length} ensayo${trials.length === 1 ? "" : "s"} de todo el equipo · conectado como ${escapeHtml(state.userName)}</div>
+    </div>
+    <div class="view">${cards}</div>
+    <button class="fab" onclick="createTrial()">+</button>
+  `;
+}
+
+const TABS = [
+  { id: "resumen", label: "Resumen", ic: "&#128202;" },
+  { id: "datos", label: "Datos", ic: "&#128203;" },
+  { id: "protocolo", label: "Protocolo", ic: "&#129514;" },
+  { id: "seguimiento", label: "Evaluar", ic: "&#128336;" },
+  { id: "fotos", label: "Fotos", ic: "&#128247;" },
+];
+
+function renderTrial() {
+  const t = state.trial;
+  const meta = t.meta || {};
+  const tabsHtml = TABS.map(tb => `<button class="subtab ${state.trialTab === tb.id ? "active" : ""}" onclick="setTrialTab('${tb.id}')">${tb.label}</button>`).join("");
+  const editable = canEdit();
+
+  let body = "";
+  if (state.trialTab === "resumen") body = renderResumen();
+  else if (state.trialTab === "datos") body = renderDatos();
+  else if (state.trialTab === "protocolo") body = renderProtocolo();
+  else if (state.trialTab === "seguimiento") body = renderSeguimiento();
+  else if (state.trialTab === "fotos") body = renderFotos();
+
+  const roleBanner = editable
+    ? `<div style="font-size:11.5px;font-weight:700;color:#fff;background:rgba(255,255,255,.16);display:inline-block;padding:3px 10px;border-radius:20px;margin-top:8px;">&#9998; Puedes editar este ensayo</div>`
+    : `<div style="font-size:11.5px;font-weight:700;color:#fff;background:rgba(255,255,255,.16);display:inline-block;padding:3px 10px;border-radius:20px;margin-top:8px;">&#128065; Solo lectura · creado por ${escapeHtml(meta.autor || "—")}</div>`;
+
+  $app.innerHTML = `
+    <div class="topbar">
+      <div class="back-row"><button class="backbtn" onclick="goHome()">&#8592; Mis ensayos</button></div>
+      <h1>${escapeHtml(meta.cultivo || "Ensayo sin cultivo")}</h1>
+      <div class="sub">${escapeHtml(meta.finca || "Finca sin definir")}</div>
+      <span class="tag mono">${escapeHtml(meta.referencia || "")}</span>
+      ${roleBanner}
+      <div class="subtabs">${tabsHtml}</div>
+    </div>
+    <div class="view">${body}</div>
+    ${bottomNavForTrial()}
+  `;
+  if (state.trialTab === "resumen") drawCharts();
+}
+
+function bottomNavForTrial() {
+  if (!canEdit()) return "";
+  const items = [
+    { id: "protocolo", ic: "&#129514;", label: "+ Producto", action: "openProtocoloModal()" },
+    { id: "seguimiento", ic: "&#128336;", label: "+ Evaluación", action: "openSeguimientoModal()" },
+    { id: "fotos", ic: "&#128247;", label: "+ Foto", action: "openFotoModal()" },
+  ];
+  if (!["protocolo", "seguimiento", "fotos"].includes(state.trialTab)) return "";
+  const it = items.find(i => i.id === state.trialTab);
+  return `<button class="fab" onclick="${it.action}">+</button>`;
+}
+
+/* ---------- Resumen ---------- */
+function renderResumen() {
+  const seg = state.trial.seguimiento || [];
+  const proto = state.trial.protocolo || [];
+  const fotos = state.photos || [];
+  const lastEval = seg.slice().sort((a, b) => (b.fecha || "").localeCompare(a.fecha || ""))[0];
+  return `
+    <div class="kpi-grid">
+      <div class="kpi"><div class="lbl">Evaluaciones</div><div class="val">${seg.length}</div></div>
+      <div class="kpi"><div class="lbl">Último BBCH</div><div class="val">${lastEval ? escapeHtml(lastEval.bbch || "—") : "—"}</div></div>
+      <div class="kpi"><div class="lbl">Productos</div><div class="val">${proto.length}</div></div>
+      <div class="kpi"><div class="lbl">Fotos</div><div class="val">${fotos.length}</div></div>
+    </div>
+    <div class="chart-wrap">
+      <h4>Evolución del estado BBCH</h4>
+      <canvas id="bbchChart" height="160"></canvas>
+    </div>
+    <div class="chart-wrap">
+      <h4>Dosis (L/Ha) por producto</h4>
+      <canvas id="dosisChart" height="160"></canvas>
+    </div>
+    <div class="card">
+      <div class="section-title"><span class="num">&#8595;</span>Exportar este ensayo</div>
+      <div style="font-size:12.5px;color:var(--muted);margin-bottom:12px;line-height:1.4;">
+        Descarga los datos en un Excel con la misma estructura que la ficha original, y las fotos en un ZIP aparte.
+      </div>
+      <button class="btn btn-primary btn-block" style="margin-bottom:8px;" onclick="exportToExcel()">&#128190; Descargar en Excel (.xlsx)</button>
+      <button class="btn btn-accent btn-block" style="margin-bottom:8px;" onclick="exportToPDF()">&#129534; Descargar informe PDF (con fotos)</button>
+      <button class="btn btn-ghost btn-block" onclick="exportPhotosZip()">&#128247; Descargar fotos (.zip)</button>
+    </div>
+  `;
+}
+
+function drawCharts() {
+  const seg = (state.trial.seguimiento || []).filter(s => s.fecha).slice().sort((a, b) => a.fecha.localeCompare(b.fecha));
+  const proto = state.trial.protocolo || [];
+  drawLineChart("bbchChart", seg.map(s => fmtDate(s.fecha)), seg.map(s => Number(s.bbch) || 0));
+  drawBarChart("dosisChart", proto.map(p => p.producto).slice(0, 8), proto.map(p => Number(p.dosis) || 0).slice(0, 8));
+}
+
+function drawLineChart(canvasId, labels, values) {
+  const c = document.getElementById(canvasId);
+  if (!c) return;
+  const ctx = c.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  const w = c.clientWidth, h = c.clientHeight || 160;
+  c.width = w * dpr; c.height = h * dpr; ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, w, h);
+  if (!values.length) { emptyChartMsg(ctx, w, h, "Aún no hay evaluaciones registradas"); return; }
+  const pad = { l: 30, r: 12, t: 10, b: 24 };
+  const maxV = Math.max(99, ...values);
+  const stepX = (w - pad.l - pad.r) / Math.max(1, values.length - 1);
+  ctx.strokeStyle = "#E1E8E3"; ctx.lineWidth = 1; ctx.font = "10px sans-serif"; ctx.fillStyle = "#657A70";
+  for (let g = 0; g <= 4; g++) {
+    const y = pad.t + (h - pad.t - pad.b) * (1 - g / 4);
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
+    ctx.fillText(Math.round(maxV * g / 4), 2, y + 3);
+  }
+  ctx.beginPath();
+  values.forEach((v, i) => {
+    const x = pad.l + stepX * i;
+    const y = pad.t + (h - pad.t - pad.b) * (1 - v / maxV);
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  });
+  ctx.strokeStyle = "#2E7D5B"; ctx.lineWidth = 2.5; ctx.lineJoin = "round"; ctx.stroke();
+  values.forEach((v, i) => {
+    const x = pad.l + stepX * i;
+    const y = pad.t + (h - pad.t - pad.b) * (1 - v / maxV);
+    ctx.beginPath(); ctx.arc(x, y, 3.5, 0, 7); ctx.fillStyle = "#EE7203"; ctx.fill();
+  });
+  ctx.fillStyle = "#657A70"; ctx.font = "9.5px sans-serif";
+  labels.forEach((lb, i) => {
+    if (labels.length > 6 && i % Math.ceil(labels.length / 6) !== 0) return;
+    const x = pad.l + stepX * i;
+    ctx.fillText(lb, x - 14, h - 6);
+  });
+}
+function drawBarChart(canvasId, labels, values) {
+  const c = document.getElementById(canvasId);
+  if (!c) return;
+  const ctx = c.getContext("2d");
+  const dpr = window.devicePixelRatio || 1;
+  const w = c.clientWidth, h = c.clientHeight || 160;
+  c.width = w * dpr; c.height = h * dpr; ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, w, h);
+  if (!values.length) { emptyChartMsg(ctx, w, h, "Aún no hay productos registrados"); return; }
+  const pad = { l: 30, r: 12, t: 10, b: 34 };
+  const maxV = Math.max(1, ...values);
+  const bw = (w - pad.l - pad.r) / values.length;
+  ctx.strokeStyle = "#E1E8E3"; ctx.font = "10px sans-serif"; ctx.fillStyle = "#657A70";
+  for (let g = 0; g <= 4; g++) {
+    const y = pad.t + (h - pad.t - pad.b) * (1 - g / 4);
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
+    ctx.fillText((maxV * g / 4).toFixed(1), 2, y + 3);
+  }
+  values.forEach((v, i) => {
+    const x = pad.l + bw * i + bw * 0.18;
+    const bh = (h - pad.t - pad.b) * (v / maxV);
+    const y = h - pad.b - bh;
+    ctx.fillStyle = "#1F4E3D";
+    ctx.fillRect(x, y, bw * 0.64, bh);
+  });
+  ctx.fillStyle = "#657A70"; ctx.font = "9px sans-serif";
+  labels.forEach((lb, i) => {
+    const x = pad.l + bw * i + bw * 0.5;
+    const short = (lb || "").slice(0, 8);
+    ctx.save(); ctx.translate(x, h - 4); ctx.textAlign = "center"; ctx.fillText(short, 0, 0); ctx.restore();
+  });
+}
+function emptyChartMsg(ctx, w, h, msg) {
+  ctx.fillStyle = "#98A69E"; ctx.font = "12px sans-serif"; ctx.textAlign = "center";
+  ctx.fillText(msg, w / 2, h / 2); ctx.textAlign = "left";
+}
+
+/* ---------- Datos generales ---------- */
+function selectField(label, field, value, options, hint) {
+  const locked = !canEdit();
+  const opts = ['<option value=""></option>'].concat(options.map(o => `<option value="${escapeHtml(o)}" ${o === value ? "selected" : ""}>${escapeHtml(o)}</option>`)).join("");
+  return `
+    <div class="field">
+      <label>${label} ${hint ? `<span class="hint">${hint}</span>` : ""}</label>
+      <select ${locked ? "disabled" : ""} onchange="onFieldChange('${field}', this.value)">${opts}</select>
+    </div>`;
+}
+function textField(label, field, value, type, hint, extra) {
+  type = type || "text";
+  const locked = !canEdit();
+  return `
+    <div class="field">
+      <label>${label} ${hint ? `<span class="hint">${hint}</span>` : ""}</label>
+      <input type="${type}" value="${escapeHtml(value || "")}" ${extra || ""} ${locked ? "disabled" : ""} onchange="onFieldChange('${field}', this.value)">
+    </div>`;
+}
+function datalistField(label, field, value, listName, hint) {
+  const locked = !canEdit();
+  return `
+    <div class="field">
+      <label>${label} ${hint ? `<span class="hint">${hint}</span>` : ""}</label>
+      <input type="text" list="dl_${listName}" value="${escapeHtml(value || "")}" ${locked ? "disabled" : ""} onchange="onFieldChange('${field}', this.value)">
+      ${locked ? "" : `<div class="list-datalist-note">Empieza a escribir para filtrar la lista</div>`}
+    </div>`;
+}
+
+function renderColaboradores() {
+  if (!isOwner()) return "";
+  const colabs = state.trial.colaboradores || [];
+  const chips = colabs.length ? colabs.map(c => `
+    <span style="display:inline-flex;align-items:center;gap:5px;background:var(--yellow);border-radius:20px;padding:4px 6px 4px 12px;font-size:12.5px;font-weight:700;margin:0 6px 6px 0;">
+      ${escapeHtml(c)}
+      <button onclick="removeColaborador('${escapeHtml(c).replace(/'/g, "&#39;")}')" style="background:none;border:none;color:var(--muted);font-size:14px;cursor:pointer;padding:0 4px;">&#10005;</button>
+    </span>`).join("") : `<div style="font-size:12.5px;color:var(--muted);margin-bottom:8px;">Nadie más tiene permiso de edición todavía.</div>`;
+  return `
+    <div class="card">
+      <div class="section-title"><span class="num">&#128101;</span>Colaboradores con permiso de edición</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:10px;">Tú creaste este ensayo, así que solo tú puedes editarlo. Añade aquí a quien más quieras que pueda registrar datos.</div>
+      <div style="margin-bottom:10px;">${chips}</div>
+      <div style="display:flex;gap:8px;">
+        <input id="colabInput" type="text" placeholder="Nombre exacto (como lo escribió al entrar)" style="flex:1;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font-size:14px;">
+        <button class="btn btn-ghost btn-sm" onclick="addColaborador()">Añadir</button>
+      </div>
+    </div>`;
+}
+
+function renderDatos() {
+  const d = state.trial.datos || {};
+  const editable = canEdit();
+  return `
+    ${editable ? "" : `<div class="card" style="background:#F3F5F3;"><div style="font-size:12.5px;color:var(--muted);">&#128065; Estás viendo este ensayo en modo lectura. Solo <b>${escapeHtml(state.trial.meta.autor || "su creador")}</b> (o quien él autorice) puede modificar estos datos.</div></div>`}
+    ${renderColaboradores()}
+    <div class="card">
+      <div class="section-title"><span class="num">1</span>Agricultor / cliente</div>
+      <div class="field-row">
+        ${textField("Nombre", "nombre", d.nombre)}
+        ${textField("Apellidos", "apellidos", d.apellidos)}
+      </div>
+      ${textField("Empresa", "empresa", d.empresa)}
+      <div class="field-row">
+        ${textField("Población", "poblacion", d.poblacion)}
+        ${textField("Provincia", "provincia", d.provincia)}
+      </div>
+      <div class="field-row">
+        ${textField("E-mail", "email", d.email, "email")}
+        ${textField("Móvil", "movil", d.movil, "tel")}
+      </div>
+      ${selectField("Actividad", "actividad", d.actividad, LISTS.ACTIVIDAD)}
+      ${selectField("Puesto", "puesto", d.puesto, LISTS.PUESTO)}
+    </div>
+    <div class="card">
+      <div class="section-title"><span class="num">2</span>Técnico / distribuidor</div>
+      ${selectField("Técnico BASF / Nunhems", "tecnico", d.tecnico, LISTS.TECNICOS)}
+      ${datalistField("Distribuidor", "distribuidor", d.distribuidor, "dist", "245 opciones")}
+    </div>
+    <div class="card">
+      <div class="section-title"><span class="num">3</span>Datos del ensayo</div>
+      ${textField("Referencia / Nº de ficha", "referencia", d.referencia || state.trial.meta.referencia)}
+      ${textField("Finca", "finca", d.finca)}
+      <div class="field-row">
+        ${selectField("Cultivo", "cultivo", d.cultivo, LISTS.CULTIVO)}
+        ${textField("Variedad", "variedad", d.variedad)}
+      </div>
+      ${textField("Tipo de sustrato", "sustrato", d.sustrato, "text", "suelo, hidroponía...")}
+      <div class="field-row">
+        ${textField("Fecha de siembra", "fechaSiembra", d.fechaSiembra, "date")}
+        ${textField("Fecha inicio ensayo", "fechaInicio", d.fechaInicio, "date")}
+      </div>
+      ${selectField("Tipo de ensayo", "tipoEnsayo", d.tipoEnsayo, LISTS.TIPO_ENSAYO)}
+      ${selectField("Recomendado por", "recomendacion", d.recomendacion, LISTS.RECOMENDACION)}
+      ${editable ? `<div id="savepill" class="savepill">&#10003; Guardado</div>` : ""}
+    </div>
+    <datalist id="dl_dist">${datalistOptions(LISTS.DISTRIBUIDORES)}</datalist>
+  `;
+}
+
+/* ---------- Protocolo ---------- */
+function renderProtocolo() {
+  const rows = state.trial.protocolo || [];
+  const editable = canEdit();
+  const empty = editable
+    ? `<div class="empty"><div class="ic">&#129514;</div>Aún no hay productos registrados.<br>Toca "+" para añadir el primero.</div>`
+    : `<div class="empty"><div class="ic">&#129514;</div>Aún no hay productos registrados en este ensayo.</div>`;
+  const list = rows.length ? rows.map(r => `
+    <div class="entry">
+      <div class="entry-head">
+        <h4>${escapeHtml(r.producto)}</h4>
+        <span class="date">${fmtDate(r.fecha)}</span>
+      </div>
+      <div class="entry-grid">
+        <div><span class="k">Dosis:</span> <span class="v">${escapeHtml(r.dosis || "—")} L/Ha</span></div>
+        <div><span class="k">Semillas/Ha:</span> <span class="v">${escapeHtml(r.semillas || "—")}</span></div>
+        <div><span class="k">Nº aplicación:</span> <span class="v">${escapeHtml(r.napp || "—")}</span></div>
+      </div>
+      ${r.obs ? `<div class="comment">${escapeHtml(r.obs)}</div>` : ""}
+      <div class="foot"><span class="author">${escapeHtml(r.autor || "")}</span>${editable ? `<button class="btn btn-sm btn-danger" onclick="deleteProtocolo('${r.id}')">Eliminar</button>` : ""}</div>
+    </div>
+  `).join("") : empty;
+  return `<div>${list}</div><datalist id="dl_prod">${datalistOptions(LISTS.PRODUCTO)}</datalist>`;
+}
+
+/* ---------- Seguimiento ---------- */
+function renderSeguimiento() {
+  const rows = (state.trial.seguimiento || []).slice().sort((a, b) => (b.fecha || "").localeCompare(a.fecha || ""));
+  const editable = canEdit();
+  const empty = editable
+    ? `<div class="empty"><div class="ic">&#128336;</div>Aún no hay evaluaciones.<br>Toca "+" para registrar la primera visita.</div>`
+    : `<div class="empty"><div class="ic">&#128336;</div>Aún no hay evaluaciones registradas en este ensayo.</div>`;
+  const list = rows.length ? rows.map(r => `
+    <div class="entry">
+      <div class="entry-head">
+        <h4>${r.bbch !== "" && r.bbch != null ? `<span class="badge-bbch">BBCH ${escapeHtml(r.bbch)}</span>` : "Evaluación"}</h4>
+        <span class="date">${fmtDate(r.fecha)}</span>
+      </div>
+      ${r.parametro ? `<div class="entry-grid"><div><span class="k">Parámetro:</span> <span class="v">${escapeHtml(r.parametro)}</span></div>${r.valor ? `<div><span class="k">Valor:</span> <span class="v">${escapeHtml(r.valor)}</span></div>` : ""}</div>` : ""}
+      ${r.comentario ? `<div class="comment">${escapeHtml(r.comentario)}</div>` : ""}
+      <div class="foot"><span class="author">${escapeHtml(r.autor || "")}</span>${editable ? `<button class="btn btn-sm btn-danger" onclick="deleteSeguimiento('${r.id}')">Eliminar</button>` : ""}</div>
+    </div>
+  `).join("") : empty;
+  return `<div>${list}</div><datalist id="dl_param">${datalistOptions(LISTS.TIPO_EVALUACION)}</datalist>`;
+}
+
+/* ---------- Fotos ---------- */
+function renderFotos() {
+  const photos = state.photos || [];
+  const editable = canEdit();
+  if (!photos.length) {
+    return editable
+      ? `<div class="empty"><div class="ic">&#128247;</div>Aún no hay fotos.<br>Toca "+" para añadir la primera.</div>`
+      : `<div class="empty"><div class="ic">&#128247;</div>Aún no hay fotos en este ensayo.</div>`;
+  }
+  return `<div class="photo-grid">${photos.map(p => `
+    <div class="photo-card" onclick="viewPhoto('${p.id}')">
+      <img src="${p.dataUrl}" alt="Foto ${fmtDate(p.fecha)}">
+      <div class="pmeta">
+        <div class="bbch">${p.bbch ? `<span class="badge-bbch">BBCH ${escapeHtml(p.bbch)}</span>` : `<span class="date">${fmtDate(p.fecha)}</span>`}</div>
+        ${p.comentario ? `<div class="cm">${escapeHtml(p.comentario)}</div>` : ""}
+      </div>
+    </div>
+  `).join("")}</div>`;
+}
+window.viewPhoto = function (id) {
+  const p = state.photos.find(x => x.id === id);
+  if (!p) return;
+  state.modal = { type: "viewfoto", photo: p };
+  render();
+};
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+function renderModal() {
+  removeModal();
+  const m = state.modal;
+  let inner = "";
+  if (m.type === "protocolo") inner = modalProtocolo(m);
+  else if (m.type === "seguimiento") inner = modalSeguimiento(m);
+  else if (m.type === "foto") inner = modalFoto(m);
+  else if (m.type === "viewfoto") inner = modalViewFoto(m);
+
+  const root = document.createElement("div");
+  root.id = "modalRoot";
+  root.className = "modal-backdrop";
+  root.onclick = (e) => { if (e.target === root) closeModal(); };
+  root.innerHTML = `<div class="modal">${inner}</div>`;
+  document.body.appendChild(root);
+}
+
+function modalProtocolo(m) {
+  return `
+    <div class="modal-head"><h3>Nuevo producto / semilla</h3><button onclick="closeModal()">&#10005;</button></div>
+    <div class="field">
+      <label>Producto / semilla</label>
+      <input type="text" list="dl_prod_modal" value="${escapeHtml(m.producto)}" oninput="updateModalField('producto', this.value)">
+    </div>
+    <datalist id="dl_prod_modal">${datalistOptions(LISTS.PRODUCTO)}</datalist>
+    <div class="field-row">
+      ${modalNumber("Dosis (L/Ha)", "dosis", m.dosis)}
+      ${modalNumber("Semillas/Ha", "semillas", m.semillas)}
+    </div>
+    <div class="field-row">
+      ${modalNumber("Nº de aplicación", "napp", m.napp)}
+      <div class="field"><label>Fecha</label><input type="date" value="${m.fecha}" onchange="updateModalField('fecha', this.value)"></div>
+    </div>
+    <div class="field"><label>Observaciones</label><textarea oninput="updateModalField('obs', this.value)">${escapeHtml(m.obs)}</textarea></div>
+    <button class="btn btn-primary btn-block" onclick="saveProtocoloEntry()">Guardar producto</button>
+  `;
+}
+function modalSeguimiento(m) {
+  return `
+    <div class="modal-head"><h3>Nueva evaluación</h3><button onclick="closeModal()">&#10005;</button></div>
+    <div class="field-row">
+      <div class="field"><label>Fecha</label><input type="date" value="${m.fecha}" onchange="updateModalField('fecha', this.value)"></div>
+      ${modalNumber("Estado BBCH (0-99)", "bbch", m.bbch, 0, 99)}
+    </div>
+    <div class="field">
+      <label>Parámetro evaluado <span class="hint">opcional</span></label>
+      <input type="text" list="dl_param_modal" value="${escapeHtml(m.parametro)}" oninput="updateModalField('parametro', this.value)">
+      <div class="list-datalist-note">Empieza a escribir para filtrar (597 opciones)</div>
+    </div>
+    <datalist id="dl_param_modal">${datalistOptions(LISTS.TIPO_EVALUACION)}</datalist>
+    <div class="field"><label>Valor / resultado</label><input type="text" value="${escapeHtml(m.valor)}" oninput="updateModalField('valor', this.value)"></div>
+    <div class="field"><label>Comentarios</label><textarea oninput="updateModalField('comentario', this.value)">${escapeHtml(m.comentario)}</textarea></div>
+    <button class="btn btn-primary btn-block" onclick="saveSeguimientoEntry()">Guardar evaluación</button>
+  `;
+}
+function modalFoto(m) {
+  return `
+    <div class="modal-head"><h3>Añadir fotografía</h3><button onclick="closeModal()">&#10005;</button></div>
+    ${m.dataUrl ? `<img class="photo-preview" src="${m.dataUrl}">` : `
+      <button type="button" class="upload-box" onclick="triggerFotoPicker()" style="width:100%;border:2px dashed var(--line);background:none;font-family:inherit;"><span class="ic">&#128248;</span>Toca para hacer una foto o elegir de la galería</button>`}
+    <input id="fotoInput" type="file" accept="image/*" style="position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;" onchange="handlePhotoFile(this)">
+    ${m.dataUrl ? `<button type="button" class="btn btn-ghost btn-block" style="margin-bottom:12px;" onclick="triggerFotoPicker()">Cambiar foto</button>` : ""}
+    <div class="field-row">
+      <div class="field"><label>Fecha</label><input type="date" value="${m.fecha}" onchange="updateModalField('fecha', this.value)"></div>
+      ${modalNumber("Estado BBCH", "bbch", m.bbch, 0, 99)}
+    </div>
+    <div class="field"><label>Comentario / fase</label><textarea oninput="updateModalField('comentario', this.value)">${escapeHtml(m.comentario)}</textarea></div>
+    <button class="btn btn-accent btn-block" onclick="saveFotoEntry()">Guardar foto</button>
+  `;
+}
+window.triggerFotoPicker = function () {
+  const input = document.getElementById("fotoInput");
+  if (input) input.click();
+};
+function modalViewFoto(m) {
+  const p = m.photo;
+  return `
+    <div class="modal-head"><h3>${p.bbch ? "BBCH " + escapeHtml(p.bbch) : "Fotografía"}</h3><button onclick="closeModal()">&#10005;</button></div>
+    <img class="photo-preview" src="${p.dataUrl}" style="max-height:360px;">
+    <div class="field"><label>Fecha</label><div>${fmtDate(p.fecha)}</div></div>
+    ${p.comentario ? `<div class="field"><label>Comentario</label><div>${escapeHtml(p.comentario)}</div></div>` : ""}
+    <div class="field"><label>Añadida por</label><div>${escapeHtml(p.autor || "—")}</div></div>
+    ${canEdit() ? `<button class="btn btn-danger btn-block" onclick="deleteFoto('${p.id}'); closeModal();">Eliminar foto</button>` : ""}
+  `;
+}
+function modalNumber(label, field, value, min, max) {
+  return `<div class="field"><label>${label}</label><input type="number" ${min !== undefined ? `min="${min}"` : ""} ${max !== undefined ? `max="${max}"` : ""} value="${value === undefined || value === null ? "" : value}" oninput="updateModalField('${field}', this.value)"></div>`;
+}
+
+/* ---------------- export to Excel / photos zip ---------------- */
+function triggerDownload(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+function dataURLtoBlob(dataUrl) {
+  const [head, b64] = dataUrl.split(",");
+  const mime = /data:(.*?);/.exec(head)[1];
+  const bin = atob(b64);
+  const arr = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+  return new Blob([arr], { type: mime });
+}
+
+window.exportToExcel = function () {
+  if (typeof XLSX === "undefined") { showToast("No se pudo cargar el módulo Excel. Revisa tu conexión."); return; }
+  const d = state.trial.datos || {};
+  const meta = state.trial.meta || {};
+  const ref = d.referencia || meta.referencia || "ENSAYO";
+  const wb = XLSX.utils.book_new();
+
+  const datosRows = [
+    ["FICHA DE ENSAYO", ref],
+    [],
+    ["DATOS DEL AGRICULTOR / CLIENTE"],
+    ["Nombre", d.nombre || ""], ["Apellidos", d.apellidos || ""], ["Empresa", d.empresa || ""],
+    ["Población", d.poblacion || ""], ["Provincia", d.provincia || ""],
+    ["E-mail", d.email || ""], ["Móvil", d.movil || ""],
+    ["Actividad", d.actividad || ""], ["Puesto", d.puesto || ""],
+    [],
+    ["DATOS DEL TÉCNICO / DISTRIBUIDOR"],
+    ["Técnico BASF / Nunhems", d.tecnico || ""], ["Distribuidor", d.distribuidor || ""],
+    [],
+    ["DATOS DEL ENSAYO"],
+    ["Referencia", ref], ["Finca", d.finca || ""], ["Cultivo", d.cultivo || ""], ["Variedad", d.variedad || ""],
+    ["Tipo de sustrato", d.sustrato || ""], ["Fecha de siembra", fmtDate(d.fechaSiembra)],
+    ["Fecha inicio ensayo", fmtDate(d.fechaInicio)], ["Tipo de ensayo", d.tipoEnsayo || ""],
+    ["Recomendado por", d.recomendacion || ""],
+  ];
+  const ws1 = XLSX.utils.aoa_to_sheet(datosRows);
+  ws1["!cols"] = [{ wch: 24 }, { wch: 34 }];
+  XLSX.utils.book_append_sheet(wb, ws1, "Datos Generales");
+
+  const protoHeader = ["Producto/Semilla", "Dosis (L/Ha)", "Semillas/Ha", "Nº Aplicación", "Fecha", "Observaciones", "Añadido por"];
+  const protoRows = (state.trial.protocolo || []).map(p => [p.producto, p.dosis, p.semillas, p.napp, fmtDate(p.fecha), p.obs, p.autor]);
+  const ws2 = XLSX.utils.aoa_to_sheet([protoHeader, ...protoRows]);
+  ws2["!cols"] = [{ wch: 22 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 30 }, { wch: 16 }];
+  XLSX.utils.book_append_sheet(wb, ws2, "Protocolo Aplicación");
+
+  const segHeader = ["Fecha", "Estado BBCH", "Parámetro Evaluado", "Valor/Resultado", "Comentarios", "Añadido por"];
+  const segRows = (state.trial.seguimiento || []).slice().sort((a, b) => (a.fecha || "").localeCompare(b.fecha || ""))
+    .map(s => [fmtDate(s.fecha), s.bbch, s.parametro, s.valor, s.comentario, s.autor]);
+  const ws3 = XLSX.utils.aoa_to_sheet([segHeader, ...segRows]);
+  ws3["!cols"] = [{ wch: 12 }, { wch: 12 }, { wch: 26 }, { wch: 16 }, { wch: 34 }, { wch: 16 }];
+  XLSX.utils.book_append_sheet(wb, ws3, "Seguimiento y Evaluaciones");
+
+  const fotoHeader = ["Nº Foto", "Fecha", "Estado BBCH", "Comentario", "Añadida por", "Archivo (ver ZIP de fotos)"];
+  const fotoRows = (state.photos || []).slice().sort((a, b) => (a.fecha || "").localeCompare(b.fecha || ""))
+    .map((p, i) => [i + 1, fmtDate(p.fecha), p.bbch, p.comentario, p.autor, photoFileName(p, i + 1)]);
+  const ws4 = XLSX.utils.aoa_to_sheet([fotoHeader, ...fotoRows]);
+  ws4["!cols"] = [{ wch: 8 }, { wch: 12 }, { wch: 12 }, { wch: 34 }, { wch: 16 }, { wch: 26 }];
+  XLSX.utils.book_append_sheet(wb, ws4, "Registro Fotográfico");
+
+  XLSX.writeFile(wb, `Ensayo_${ref}.xlsx`);
+  showToast("Excel descargado");
+};
+
+function photoFileName(p, idx) {
+  return `foto_${idx.toString().padStart(2, "0")}_${p.fecha || "sinfecha"}${p.bbch ? "_BBCH" + p.bbch : ""}.jpg`;
+}
+
+window.exportPhotosZip = async function () {
+  if (typeof JSZip === "undefined") { showToast("No se pudo cargar el módulo ZIP. Revisa tu conexión."); return; }
+  const photos = state.photos || [];
+  if (!photos.length) { showToast("Este ensayo aún no tiene fotos"); return; }
+  showToast("Preparando ZIP de fotos...");
+  const zip = new JSZip();
+  photos.slice().sort((a, b) => (a.fecha || "").localeCompare(b.fecha || "")).forEach((p, i) => {
+    zip.file(photoFileName(p, i + 1), dataURLtoBlob(p.dataUrl));
+  });
+  const blob = await zip.generateAsync({ type: "blob" });
+  const ref = (state.trial.datos && state.trial.datos.referencia) || (state.trial.meta && state.trial.meta.referencia) || "ENSAYO";
+  triggerDownload(blob, `Fotos_${ref}.zip`);
+  showToast("ZIP de fotos descargado");
+};
+
+function loadImageDims(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve({ w: img.naturalWidth || 4, h: img.naturalHeight || 3 });
+    img.onerror = () => resolve({ w: 4, h: 3 });
+    img.src = src;
+  });
+}
+
+window.exportToPDF = async function () {
+  if (typeof window.jspdf === "undefined") { showToast("No se pudo cargar el módulo PDF. Revisa tu conexión."); return; }
+  showToast("Generando PDF...");
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: "mm", format: "a4" });
+  const pageW = 210, pageH = 297, marginX = 14;
+  const GREEN = [31, 78, 61], MID = [46, 125, 91], INK = [22, 36, 30], MUTED = [101, 122, 112];
+
+  const d = state.trial.datos || {};
+  const meta = state.trial.meta || {};
+  const ref = d.referencia || meta.referencia || "ENSAYO";
+
+  function drawHeader(title, sub) {
+    doc.setFillColor(...GREEN); doc.rect(0, 0, pageW, 22, "F");
+    doc.setTextColor(255, 255, 255); doc.setFont("helvetica", "bold"); doc.setFontSize(15);
+    doc.text(title, marginX, 12);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9);
+    doc.text(sub, marginX, 18);
+    doc.setTextColor(...INK);
+    return 30;
+  }
+  function sectionLabel(text, y) {
+    doc.setFont("helvetica", "bold"); doc.setFontSize(11.5); doc.setTextColor(...GREEN);
+    doc.text(text, marginX, y);
+    doc.setTextColor(...INK);
+    return y + 6;
+  }
+
+  let y = drawHeader("FICHA DE ENSAYO", `Referencia ${ref}  ·  Generado el ${fmtDate(todayISO())}`);
+
+  y = sectionLabel("Datos del agricultor / cliente", y);
+  doc.setFont("helvetica", "normal"); doc.setFontSize(9.5);
+  [
+    `Nombre: ${d.nombre || "—"} ${d.apellidos || ""}`,
+    `Empresa: ${d.empresa || "—"}`,
+    `Población / Provincia: ${d.poblacion || "—"} / ${d.provincia || "—"}`,
+    `E-mail / Móvil: ${d.email || "—"} / ${d.movil || "—"}`,
+  ].forEach(l => { doc.text(l, marginX, y); y += 5; });
+  y += 4;
+
+  y = sectionLabel("Datos del ensayo", y);
+  doc.setFont("helvetica", "normal"); doc.setFontSize(9.5);
+  [
+    `Técnico BASF/Nunhems: ${d.tecnico || "—"}     Distribuidor: ${d.distribuidor || "—"}`,
+    `Finca: ${d.finca || "—"}     Cultivo: ${d.cultivo || "—"}     Variedad: ${d.variedad || "—"}`,
+    `Tipo de sustrato: ${d.sustrato || "—"}`,
+    `Fecha de siembra: ${fmtDate(d.fechaSiembra)}     Inicio del ensayo: ${fmtDate(d.fechaInicio)}`,
+    `Tipo de ensayo: ${d.tipoEnsayo || "—"}     Recomendado por: ${d.recomendacion || "—"}`,
+  ].forEach(l => { doc.text(l, marginX, y); y += 5; });
+  y += 6;
+
+  y = sectionLabel("Protocolo de aplicación", y);
+  const proto = state.trial.protocolo || [];
+  doc.autoTable({
+    startY: y,
+    head: [["Producto/Semilla", "Dosis L/Ha", "Semillas/Ha", "Nº Ap.", "Fecha", "Añadido por"]],
+    body: proto.length ? proto.map(p => [p.producto || "", p.dosis || "", p.semillas || "", p.napp || "", fmtDate(p.fecha), p.autor || ""]) : [["Sin productos registrados en este ensayo", "", "", "", "", ""]],
+    styles: { fontSize: 8.5, cellPadding: 2.2 },
+    headStyles: { fillColor: MID, textColor: 255 },
+    margin: { left: marginX, right: marginX },
+  });
+  y = doc.lastAutoTable.finalY + 10;
+
+  if (y > 250) { doc.addPage(); y = drawHeader("FICHA DE ENSAYO", `Referencia ${ref}`); }
+  y = sectionLabel("Seguimiento y evaluaciones", y);
+  const seg = (state.trial.seguimiento || []).slice().sort((a, b) => (a.fecha || "").localeCompare(b.fecha || ""));
+  doc.autoTable({
+    startY: y,
+    head: [["Fecha", "BBCH", "Parámetro evaluado", "Valor", "Comentario", "Añadido por"]],
+    body: seg.length ? seg.map(s => [fmtDate(s.fecha), s.bbch || "", s.parametro || "", s.valor || "", s.comentario || "", s.autor || ""]) : [["Sin evaluaciones registradas en este ensayo", "", "", "", "", ""]],
+    styles: { fontSize: 8, cellPadding: 2.2 },
+    headStyles: { fillColor: MID, textColor: 255 },
+    margin: { left: marginX, right: marginX },
+    columnStyles: { 4: { cellWidth: 42 } },
+  });
+  y = doc.lastAutoTable.finalY + 10;
+
+  const photos = (state.photos || []).slice().sort((a, b) => (a.fecha || "").localeCompare(b.fecha || ""));
+  if (photos.length) {
+    doc.addPage();
+    y = drawHeader("REGISTRO FOTOGRÁFICO", `Ensayo ${ref}  ·  ${photos.length} foto${photos.length === 1 ? "" : "s"}`);
+    const boxW = 85, boxH = 62, gapX = 8, gapY = 24;
+    let x = marginX, col = 0;
+    for (const p of photos) {
+      if (y + boxH + gapY > pageH - 10) {
+        doc.addPage();
+        y = drawHeader("REGISTRO FOTOGRÁFICO", `Ensayo ${ref}`);
+        x = marginX; col = 0;
+      }
+      try {
+        const dims = await loadImageDims(p.dataUrl);
+        const ratio = dims.w / dims.h;
+        let w = boxW, h = boxW / ratio;
+        if (h > boxH) { h = boxH; w = boxH * ratio; }
+        const offsetX = x + (boxW - w) / 2;
+        doc.setDrawColor(225, 232, 227); doc.rect(x, y, boxW, boxH);
+        doc.addImage(p.dataUrl, "JPEG", offsetX, y + (boxH - h) / 2, w, h);
+      } catch (e) { /* skip broken image */ }
+      doc.setFont("helvetica", "bold"); doc.setFontSize(8.5); doc.setTextColor(...INK);
+      doc.text(`${fmtDate(p.fecha)}${p.bbch ? "   ·   BBCH " + p.bbch : ""}`, x, y + boxH + 5);
+      doc.setFont("helvetica", "normal"); doc.setFontSize(7.5); doc.setTextColor(...MUTED);
+      const comment = (p.comentario || "").slice(0, 90);
+      if (comment) doc.text(doc.splitTextToSize(comment, boxW), x, y + boxH + 9);
+      col++;
+      if (col >= 2) { col = 0; x = marginX; y += boxH + gapY; }
+      else { x = marginX + boxW + gapX; }
+    }
+  }
+
+  doc.save(`Informe_${ref}.pdf`);
+  showToast("PDF descargado");
+};
+
+/* ---------------- init ---------------- */
+boot();
+
+</script>
+</body>
+</html>
